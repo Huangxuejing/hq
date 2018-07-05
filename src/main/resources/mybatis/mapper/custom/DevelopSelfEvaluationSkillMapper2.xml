@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.dao.mapper.custom.DevelopSelfEvaluationSkillMapper2">
+  
+  <!-- 获取老师自评能力树 -->
+  <select id="getSelfEvaluationSkillTree" resultType="com.taidii.staffdevelopment.dto.selfEvaluation.SelfEvaluationSkillDTO">
+  	SELECT
+		ses.id id,
+		dls.id dutyLevelSkillId,
+		dls.name name,
+		dls.depth depth,
+		dsg.guiding_questions guidingQuestion,
+		ses.evidence evidence,
+		ses.score raing,
+		sep.id selfEvaluationPlanId,
+		sep.target_score targetScore
+	FROM
+		develop_duty_level_skill dls
+	LEFT JOIN (SELECT * FROM develop_skill_guidings WHERE duty_level_id = #{dutyLevelId} AND is_delete = #{isDelete}) dsg ON dsg.skill_id = dls.id
+	LEFT JOIN (SELECT * FROM develop_self_evaluation_skill WHERE self_evaluation_id = #{selfEvaluationId} AND is_delete = #{isDelete}) ses ON dls.id = ses.duty_level_skill_id
+	LEFT JOIN (SELECT * FROM develop_self_evaluation_plan WHERE self_evaluation_id = #{selfEvaluationId} AND is_delete = #{isDelete}) sep ON dls.id = sep.duty_level_skill_id
+	WHERE
+		dls.parent_id = #{parentId}
+	AND dls.is_delete = #{isDelete}
+	AND (dls.school_id = #{schoolId} OR dls.school_id = 0)
+	AND (dls.year = #{year}  OR dls.year = 0)
+	AND (dls.term = #{period} OR dls.term = 0)
+  </select>
+
+</mapper>

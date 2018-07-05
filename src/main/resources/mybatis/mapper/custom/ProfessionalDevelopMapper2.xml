@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.dao.mapper.custom.ProfessionalDevelopMapper2">
+
+    <!-- 通过用户id获取老师的职务级别 -->
+    <select id="fetchNameAndDutyName" resultType="com.taidii.staffdevelopment.dto.development.TeacherInfoDTO">
+      SELECT
+            ddl.id dutyLevelId,
+            ddl. NAME dutyName,
+            auth.id userId,
+            concat(
+                auth.first_name,
+                " ",
+                auth.last_name
+            ) teacherName
+        FROM
+        auth_user auth
+        left JOIN develop_user_duty_level dudl ON auth.id = dudl.user_id
+        left join  	develop_duty_level ddl    ON ddl.id = dudl.duty_level_id
+        where auth.id =#{userId}
+    </select>
+
+
+    <!-- 所有 Improve plan  -->
+    <select id="fetchImprovePlan" resultType="com.taidii.staffdevelopment.dto.development.SKillDetailDTO">
+      SELECT
+            plan.id,
+            plan.gmt_create gmtCreate,
+            plan.gmt_modify gmtModify,
+            plan.is_delete isDelete,
+            plan.self_evaluation_id selfEvaluationId,
+            plan.duty_level_skill_id dutyLevelSkillId,
+            plan.area_of_improvement areaOfImprovement,
+            plan.action_plan actionPlan,
+            plan.target_complete_date targetCompleteDate,
+            plan.course_id courseId,
+            plan.status status,
+            plan.evidence evidence,
+            plan.last_rating lastRating ,
+            plan.review_data reviewData,
+            plan.mark_complete_date markCompleteDate,
+            plan.more_review_date  moreReviewDate,
+            dls.name skillName,
+            dls.parent_id  parentId,
+            dls.depth depth
+      FROM
+            develop_duty_level_skill dls
+        INNER JOIN
+         develop_self_evaluation_plan plan
+      on plan.duty_level_skill_id =dls.id
+      WHERE
+          plan.self_evaluation_id =#{evaluationId}
+    </select>
+
+    <!-- 所有 fetchParentSkill  -->
+    <select id="fetchParentSkill" resultType="com.taidii.staffdevelopment.dto.development.SKillDetailDTO">
+        SELECT
+            dls.id dutyLevelSkillId,
+            dls.name skillName,
+            dls.parent_id  parentId,
+            dls.depth depth
+        FROM
+          develop_duty_level_skill dls
+        WHERE
+         dls.id  in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </select>
+
+
+    <!-- 所有 Improve plan  -->
+    <select id="summaryTrainHours" resultType="integer">
+        SELECT
+            SUM(course.training_hours)
+        FROM
+            develop_course course,
+            develop_user_course usercourse
+        WHERE
+           course.id = usercourse.course_id
+        AND usercourse.self_evaluation_id =#{evaluationId}
+    </select>
+
+
+    <!-- 参加开始时间   -->
+    <select id="fetchSkillTrain" resultType="com.taidii.staffdevelopment.dto.development.SkillTrainDTO">
+        SELECT
+         course.start_time gmtModify,
+         course.duty_level_skill_id dutyLevelSkillId,
+         course.status status
+        FROM
+        develop_course course,
+        develop_user_course usercourse
+        WHERE
+        course.id = usercourse.course_id
+        AND usercourse.self_evaluation_id =#{evaluationId}
+        AND usercourse.is_delete =#{isDelete}
+        ORDER BY  usercourse.gmt_modify desc
+    </select>
+
+
+    <!-- 用户最后一次评估id   -->
+    <select id="fetchLastId" resultType="Integer">
+        select
+        max(id)
+         from develop_self_evaluation evl
+        where evl.is_delete =#{isDelete}
+        and evl.user_id =#{userId}
+        and evl.status=#{status}
+    </select>
+</mapper>

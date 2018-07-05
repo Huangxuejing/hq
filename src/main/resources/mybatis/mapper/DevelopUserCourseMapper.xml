@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.dao.mapper.DevelopUserCourseMapper">
+  <resultMap id="BaseResultMap" type="com.taidii.staffdevelopment.entity.DevelopUserCourse">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="plan_total_training_hour" jdbcType="TINYINT" property="planTotalTrainingHour" />
+    <result column="completed_training_hour" jdbcType="TINYINT" property="completedTrainingHour" />
+    <result column="course_fee" jdbcType="DOUBLE" property="courseFee" />
+    <result column="course_grant" jdbcType="DOUBLE" property="grant" />
+    <result column="absentee_payroll" jdbcType="DOUBLE" property="absenteePayroll" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="self_evaluation_id" jdbcType="INTEGER" property="selfEvaluationId"/>
+    <result column="attachment" jdbcType="VARCHAR" property="attachment"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, gmt_create, gmt_modify, is_delete, user_id, course_id, plan_total_training_hour, 
+    completed_training_hour, course_fee, course_grant, absentee_payroll, status, self_evaluation_id, attachment
+  </sql>
+  <select id="selectByExample" parameterType="com.taidii.staffdevelopment.entity.DevelopUserCourseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from develop_user_course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from develop_user_course
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from develop_user_course
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.taidii.staffdevelopment.entity.DevelopUserCourseExample">
+    delete from develop_user_course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.taidii.staffdevelopment.entity.DevelopUserCourse">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into develop_user_course (gmt_create, gmt_modify, is_delete, 
+      user_id, course_id, plan_total_training_hour, 
+      completed_training_hour, course_fee, course_grant,
+      absentee_payroll, status, self_evaluation_id, attachment)
+    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, 
+      #{userId,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{planTotalTrainingHour,jdbcType=TINYINT}, 
+      #{completedTrainingHour,jdbcType=TINYINT}, #{courseFee,jdbcType=DOUBLE}, #{grant,jdbcType=DOUBLE}, 
+      #{absenteePayroll,jdbcType=DOUBLE}, #{status,jdbcType=TINYINT}, #{selfEvaluationId, jdbcType=INTEGER}, #{attachment, jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taidii.staffdevelopment.entity.DevelopUserCourse">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into develop_user_course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="planTotalTrainingHour != null">
+        plan_total_training_hour,
+      </if>
+      <if test="completedTrainingHour != null">
+        completed_training_hour,
+      </if>
+      <if test="courseFee != null">
+        course_fee,
+      </if>
+      <if test="grant != null">
+        course_grant,
+      </if>
+      <if test="absenteePayroll != null">
+        absentee_payroll,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="selfEvaluationId != null">
+        self_evaluation_id,
+      </if>
+      <if test="attachment != null">
+        attachment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="planTotalTrainingHour != null">
+        #{planTotalTrainingHour,jdbcType=TINYINT},
+      </if>
+      <if test="completedTrainingHour != null">
+        #{completedTrainingHour,jdbcType=TINYINT},
+      </if>
+      <if test="courseFee != null">
+        #{courseFee,jdbcType=DOUBLE},
+      </if>
+      <if test="grant != null">
+        #{grant,jdbcType=DOUBLE},
+      </if>
+      <if test="absenteePayroll != null">
+        #{absenteePayroll,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="selfEvaluationId != null">
+        #{selfEvaluationId,jdbcType=INTEGER},
+      </if>
+      <if test="attachment != null">
+        #{attachment, jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.taidii.staffdevelopment.entity.DevelopUserCourseExample" resultType="java.lang.Long">
+    select count(*) from develop_user_course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update develop_user_course
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModify != null">
+        gmt_modify = #{record.gmtModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseId != null">
+        course_id = #{record.courseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.planTotalTrainingHour != null">
+        plan_total_training_hour = #{record.planTotalTrainingHour,jdbcType=TINYINT},
+      </if>
+      <if test="record.completedTrainingHour != null">
+        completed_training_hour = #{record.completedTrainingHour,jdbcType=TINYINT},
+      </if>
+      <if test="record.courseFee != null">
+        course_fee = #{record.courseFee,jdbcType=DOUBLE},
+      </if>
+      <if test="record.grant != null">
+        course_grant = #{record.grant,jdbcType=DOUBLE},
+      </if>
+      <if test="record.absenteePayroll != null">
+        absentee_payroll = #{record.absenteePayroll,jdbcType=DOUBLE},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.selfEvaluationId != null">
+        self_evaluation_id = #{record.selfEvaluationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attachment != null">
+        attachment = #{attachment, jdbcType=VARCHAR}
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update develop_user_course
+    set id = #{record.id,jdbcType=INTEGER},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{record.gmtModify,jdbcType=TIMESTAMP},
+      is_delete = #{record.isDelete,jdbcType=TINYINT},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      course_id = #{record.courseId,jdbcType=INTEGER},
+      plan_total_training_hour = #{record.planTotalTrainingHour,jdbcType=TINYINT},
+      completed_training_hour = #{record.completedTrainingHour,jdbcType=TINYINT},
+      course_fee = #{record.courseFee,jdbcType=DOUBLE},
+      course_grant = #{record.grant,jdbcType=DOUBLE},
+      absentee_payroll = #{record.absenteePayroll,jdbcType=DOUBLE},
+      status = #{record.status,jdbcType=TINYINT},
+      self_evaluation_id = #{record.selfEvaluationId,jdbcType=INTEGER},
+      attachment = #{record.attachment, jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taidii.staffdevelopment.entity.DevelopUserCourse">
+    update develop_user_course
+    <set>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="planTotalTrainingHour != null">
+        plan_total_training_hour = #{planTotalTrainingHour,jdbcType=TINYINT},
+      </if>
+      <if test="completedTrainingHour != null">
+        completed_training_hour = #{completedTrainingHour,jdbcType=TINYINT},
+      </if>
+      <if test="courseFee != null">
+        course_fee = #{courseFee,jdbcType=DOUBLE},
+      </if>
+      <if test="grant != null">
+        course_grant = #{grant,jdbcType=DOUBLE},
+      </if>
+      <if test="absenteePayroll != null">
+        absentee_payroll = #{absenteePayroll,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="selfEvaluationId != null">
+        self_evaluation_id = #{selfEvaluationId,jdbcType=INTEGER},
+      </if>
+      <if test="attachment != null">
+        attachment = #{attachment, jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taidii.staffdevelopment.entity.DevelopUserCourse">
+    update develop_user_course
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      user_id = #{userId,jdbcType=INTEGER},
+      course_id = #{courseId,jdbcType=INTEGER},
+      plan_total_training_hour = #{planTotalTrainingHour,jdbcType=TINYINT},
+      completed_training_hour = #{completedTrainingHour,jdbcType=TINYINT},
+      course_fee = #{courseFee,jdbcType=DOUBLE},
+      course_grant = #{grant,jdbcType=DOUBLE},
+      absentee_payroll = #{absenteePayroll,jdbcType=DOUBLE},
+      status = #{status,jdbcType=TINYINT},
+      self_evaluation_id = #{selfEvaluationId,jdbcType=INTEGER},
+      attachment = #{attachment, jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

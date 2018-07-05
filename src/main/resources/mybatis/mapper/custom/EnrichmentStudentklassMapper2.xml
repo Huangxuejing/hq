@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.custom.EnrichmentStudentklassMapper2">
+	<resultMap id="BaseResultMap" type="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassschedule">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="hq_id" jdbcType="INTEGER" property="hqId" />
+    <result column="center_id" jdbcType="INTEGER" property="centerId" />
+    <result column="klassname" jdbcType="VARCHAR" property="klassname" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="level_id" jdbcType="INTEGER" property="levelId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="unit_price" jdbcType="DECIMAL" property="unitPrice" />
+    <result column="number_of_class" jdbcType="INTEGER" property="numberOfClass" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="assistant_id" jdbcType="INTEGER" property="assistantId" />
+    <result column="room_id" jdbcType="INTEGER" property="roomId" />
+    <result column="capacity" jdbcType="INTEGER" property="capacity" />
+    <result column="date_from" jdbcType="DATE" property="dateFrom" />
+    <result column="date_to" jdbcType="DATE" property="dateTo" />
+    <result column="date_pending" jdbcType="BIT" property="datePending" />
+    <result column="created_date" jdbcType="DATE" property="createdDate" />
+    <result column="created_by_id" jdbcType="INTEGER" property="createdById" />
+    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
+    <result column="last_update_by_id" jdbcType="INTEGER" property="lastUpdateById" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <resultMap id="timeResultMap" type="com.taidii.staffdevelopment.hq.dto.EnrichmentKlassscheduletimeDto">
+  	<id column="id" jdbcType="INTEGER" property="id"/>
+  	<result column="klassschedule_id" jdbcType="INTEGER" property="klassscheduleId"/>
+  	<result column="repeat" jdbcType="INTEGER" property="reapeat"/>
+  	<result column="start_time" jdbcType="DATE" property="startTime"/>
+  	<result column="end_time" jdbcType="DATE" property="endTime"/>
+  </resultMap>
+   <sql id="Base_Column_List">
+    id, hq_id, center_id, klassname, course_id, level_id, type, unit_price, number_of_class, 
+    teacher_id, assistant_id, room_id, capacity, date_from, date_to, date_pending, created_date, 
+    created_by_id, last_update, last_update_by_id, remarks
+  </sql>
+  
+  <select id="getStudentByClassId" resultType="com.taidii.staffdevelopment.hq.dto.StudentDto">
+    select DISTINCT b.id,b.fullname name,if(b.gender=0,'男','女') gender,b.emergency_contact_no number,b.enter_date enrolmentDate,c.left_lessons leftLessons
+    from enrichment_studentklass a join students_student b on a.student_id=b.id
+    join enrichment_studentklassschedulelessoncount c on c.student_id=b.id and c.klassschedule_id=#{classId}
+    where a.student_id is not null
+    and a.klassschedule_id=#{classId}
+    and a.date >= date_format(now(),'%y-%m-%d')
+    and a.type!=3
+    and a.reschedule_type!=1
+    and (b.leave_date >= date_format(now(),'%y-%m-%d') or b.leave_date is null)
+  </select>
+  
+  <select id="selectEnrichmentKlassscheduleByDateFromAndDateTo" resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from enrichment_klassschedule
+    <where>
+    	<if test="null != dateFrom">
+    		 <![CDATA[date_from<=#{dateFrom}]]>
+    	</if>
+    	<if test="null != dateTo">
+    		<![CDATA[and date_to>=#{dateTo}]]>
+    	</if>
+    	<if test="null != centerId">
+    		<![CDATA[and center_id=#{centerId}]]>
+    	</if>
+    </where>
+  </select>
+  
+  <select id="selectByClassId" parameterType="Integer" resultMap="timeResultMap">
+ 	<![CDATA[
+ 		select id,klassschedule_id,e.repeat,start_time,end_time from enrichment_klassscheduletime e where klassschedule_id = #{classId}
+ 	]]>
+  </select>
+  
+  <select id="selectTeachersByCourseIdCenterId" resultType="List">
+  	SELECT
+		et.teacher_id
+	FROM
+		accounts_teacher t,
+		enrichment_teachercourse et
+	WHERE
+		t.id = et.teacher_id
+	AND t.center_id = #{centerId}
+	AND et.course_id =#{courseId};
+  </select>
+    <select id="getStudentNumber" resultType="java.lang.Integer">
+        select count(DISTINCT b.id)
+    from enrichment_studentklass a join students_student b on a.student_id=b.id
+    where a.student_id is not null
+    and a.klassschedule_id=#{classId}
+    and a.date >= date_format(now(),'%y-%m-%d')
+    and a.type!=3
+    and a.reschedule_type!=1
+    and (b.leave_date >= date_format(now(),'%y-%m-%d') or b.leave_date is null)
+
+    </select>
+    <select id="getStudentStatus" resultType="com.taidii.staffdevelopment.hq.dto.StatusDto">
+      select enroll_date status1, end_date status1
+     from enrichment_studentklassschedule
+     where auto_generated=0 and student_id=#{studentId} and klassschedule_id=#{classId} limit 1
+    </select>
+</mapper>

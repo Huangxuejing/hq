@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.custom.EnrichmentKlassscheduleMapper2">
+    <resultMap id="ClassListDto" type="com.taidii.staffdevelopment.hq.dto.ClassListDto">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="teacher" property="teacher"></result>
+        <result column="startClass" property="startClass"></result>
+        <result column="room" property="room"></result>
+        <result column="price" property="price"></result>
+        <result column="type" property="type"></result>
+        <collection property="listDtos" resultMap="RepeatListDto"></collection>
+    </resultMap>
+    <resultMap id="RepeatListDto" type="com.taidii.staffdevelopment.hq.dto.RepeatListDto">
+        <result column="repeat" property="repeat"></result>
+        <result column="startTime" property="startTime"></result>
+        <result column="endTime" property="endTime"></result>
+    </resultMap>
+    <resultMap id="ClassSchedule2Dto" type="com.taidii.staffdevelopment.hq.dto.ClassSchedule2Dto">
+        <result column="datefrom" property="datefrom"></result>
+        <result column="dateto" property="dateto"></result>
+        <result column="type" property="type"></result>
+        <result column="program" property="program"></result>
+        <result column="centre" property="centre"></result>
+        <result column="totalSeat" property="totalSeat"></result>
+        <result column="userSeat" property="userSeat"></result>
+        <collection property="timeDtos" resultMap="RepeatListDto"></collection>
+    </resultMap>
+  <select id="getClassSchedule" resultMap="ClassSchedule2Dto">
+      select a.date_from datefrom,a.date_to dateto,a.type,b.start_time startTime,b.repeat,c.name program,d.name centre,e.capacity totalSeat,a.capacity userSeat
+        from enrichment_klassschedule a
+        join enrichment_klassscheduletime b on a.id=b.klassschedule_id
+        join enrichment_course c on a.course_id=c.id
+        join centers_center d on a.center_id=d.id
+        join enrichment_room e on a.room_id=e.id
+        where a.id=#{classId}
+  </select>
+    <select id="getItemList" resultType="com.taidii.staffdevelopment.hq.dto.ItemListDto">
+        select DISTINCT b.id,b.unit_price amount,b.type,c.name course,d.name level from enrichment_klassschedule_hq a
+        join enrichment_klassschedule b on a.klassschedule_id=b.id
+        join enrichment_course c on c.id=b.course_id
+        join enrichment_courselevel d on d.id=b.level_id
+        where b.hq_id=1 and a.hq_id=#{hqId}
+    </select>
+    <select id="getClassListByCenter" resultMap="ClassListDto">
+        select a.id,a.klassname name,a.date_from startClass,b.repeat,b.start_time startTime,b.end_time endTime,a.room_id room,a.unit_price price,a.type,a.teacher_id teacher
+        from enrichment_klassschedule a
+        join enrichment_klassscheduletime b on a.id=b.klassschedule_id
+        where a.center_id=#{centerId}
+        <if test="isStart!=null">
+            and a.date_pending=#{isStart}
+        </if>
+        <if test="year!=null">
+            and year(a.date_from)=#{year}
+        </if>
+        <if test="repeat!=null">
+            and  b.repeat=#{repeat}
+        </if>
+        <if test="courseId!=null">
+            and a.course_id=#{courseId}
+        </if>
+        <if test="keyWord!=null">
+            and a.klassname like "%"#{keyWord}"%"
+        </if>
+    </select>
+    <select id="getClassListByHq" resultMap="ClassListDto">
+        select DISTINCT a.id,a.klassname name,a.date_from startClass,b.repeat,b.start_time startTime,b.end_time endTime,a.room_id room,a.unit_price price,a.type,a.teacher_id teacher
+           from enrichment_klassschedule_hq f
+           join enrichment_klassschedule a on a.id=f.klassschedule_id
+           join enrichment_klassscheduletime b on a.id=b.klassschedule_id
+           where f.hq_id=#{hqId}
+        <if test="isStart!=null">
+            and a.date_pending=#{isStart}
+        </if>
+        <if test="year!=null">
+            and year(a.date_from)=#{year}
+        </if>
+        <if test="repeat!=null">
+            and  b.repeat=#{repeat}
+        </if>
+        <if test="courseId!=null">
+            and a.course_id=#{courseId}
+        </if>
+        <if test="keyWord!=null">
+            and a.klassname like '%'#{keyWord}'%'
+        </if>
+    </select>
+    <select id="getClassSchedule2" resultMap="ClassSchedule2Dto">
+         select a.date_from datefrom,a.date_to dateto,a.type,b.start_time startTime,b.repeat,c.name program,d.name centre,e.capacity totalSeat,a.capacity userSeat
+        from enrichment_klassschedule_hq f join enrichment_klassschedule a on f.klassschedule_id=a.id
+        join enrichment_klassscheduletime b on a.id=b.klassschedule_id
+        join enrichment_course c on a.course_id=c.id
+        join centers_center d on f.center_id=d.id
+        join enrichment_room e on a.room_id=e.id
+        where a.id=#{classId} and f.hq_id=#{hqId}
+    </select>
+    <select id="getStartYear" resultType="java.lang.Integer">
+        select distinct year(date_from) from enrichment_klassschedule where date_from is not null
+    </select>
+</mapper>

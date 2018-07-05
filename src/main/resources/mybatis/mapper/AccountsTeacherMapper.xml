@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.AccountsTeacherMapper">
+  <resultMap id="BaseResultMap" type="com.taidii.staffdevelopment.hq.entity.AccountsTeacher">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="center_id" jdbcType="INTEGER" property="centerId" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="ic" jdbcType="VARCHAR" property="ic" />
+    <result column="identification_type" jdbcType="INTEGER" property="identificationType" />
+    <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
+    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
+    <result column="home_number" jdbcType="VARCHAR" property="homeNumber" />
+    <result column="mobile_number" jdbcType="VARCHAR" property="mobileNumber" />
+    <result column="marital_status" jdbcType="INTEGER" property="maritalStatus" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="employment_date" jdbcType="DATE" property="employmentDate" />
+    <result column="resignation_date" jdbcType="DATE" property="resignationDate" />
+    <result column="race" jdbcType="VARCHAR" property="race" />
+    <result column="education_level" jdbcType="VARCHAR" property="educationLevel" />
+    <result column="designation" jdbcType="VARCHAR" property="designation" />
+    <result column="postal_code" jdbcType="VARCHAR" property="postalCode" />
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
+    <result column="total_overtime" jdbcType="INTEGER" property="totalOvertime" />
+    <result column="total_overtime_claimed" jdbcType="INTEGER" property="totalOvertimeClaimed" />
+    <result column="deleteflag" jdbcType="INTEGER" property="deleteflag" />
+    <result column="unit_no" jdbcType="VARCHAR" property="unitNo" />
+    <result column="employment_status" jdbcType="INTEGER" property="employmentStatus" />
+    <result column="employment_start" jdbcType="DATE" property="employmentStart" />
+    <result column="employment_end" jdbcType="DATE" property="employmentEnd" />
+    <result column="contract_period" jdbcType="VARCHAR" property="contractPeriod" />
+    <result column="probation_period" jdbcType="DATE" property="probationPeriod" />
+    <result column="probation_end" jdbcType="DATE" property="probationEnd" />
+    <result column="registered_address" jdbcType="VARCHAR" property="registeredAddress" />
+    <result column="length_of_service" jdbcType="VARCHAR" property="lengthOfService" />
+    <result column="graduation_school" jdbcType="VARCHAR" property="graduationSchool" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="graduation_date" jdbcType="DATE" property="graduationDate" />
+    <result column="former_company" jdbcType="VARCHAR" property="formerCompany" />
+    <result column="endowment" jdbcType="VARCHAR" property="endowment" />
+    <result column="medical_treatment" jdbcType="VARCHAR" property="medicalTreatment" />
+    <result column="archives" jdbcType="VARCHAR" property="archives" />
+    <result column="degree_certificate" jdbcType="VARCHAR" property="degreeCertificate" />
+    <result column="qualification" jdbcType="VARCHAR" property="qualification" />
+    <result column="touch_able" jdbcType="INTEGER" property="touchAble" />
+    <result column="application_date" jdbcType="DATE" property="applicationDate" />
+    <result column="expired_date" jdbcType="DATE" property="expiredDate" />
+    <result column="firstAid_expiry_date" jdbcType="DATE" property="firstaidExpiryDate" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="bank_account_no" jdbcType="VARCHAR" property="bankAccountNo" />
+    <result column="customer_reference_no" jdbcType="VARCHAR" property="customerReferenceNo" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, center_id, avatar, gender, ic, identification_type, date_of_birth, nationality, 
+    home_number, mobile_number, marital_status, address, employment_date, resignation_date, 
+    race, education_level, designation, postal_code, group_id, rfid, total_overtime, 
+    total_overtime_claimed, deleteflag, unit_no, employment_status, employment_start, 
+    employment_end, contract_period, probation_period, probation_end, registered_address, 
+    length_of_service, graduation_school, major, graduation_date, former_company, endowment, 
+    medical_treatment, archives, degree_certificate, qualification, touch_able, application_date, 
+    expired_date, firstAid_expiry_date, bank_name, account_name, bank_account_no, customer_reference_no, 
+    type
+  </sql>
+  <select id="selectByExample" parameterType="com.taidii.staffdevelopment.hq.entity.AccountsTeacherExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from accounts_teacher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from accounts_teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from accounts_teacher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.taidii.staffdevelopment.hq.entity.AccountsTeacherExample">
+    delete from accounts_teacher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.taidii.staffdevelopment.hq.entity.AccountsTeacher">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into accounts_teacher (user_id, center_id, avatar, 
+      gender, ic, identification_type, 
+      date_of_birth, nationality, home_number, 
+      mobile_number, marital_status, address, 
+      employment_date, resignation_date, race, 
+      education_level, designation, postal_code, 
+      group_id, rfid, total_overtime, 
+      total_overtime_claimed, deleteflag, unit_no, 
+      employment_status, employment_start, employment_end, 
+      contract_period, probation_period, probation_end, 
+      registered_address, length_of_service, graduation_school, 
+      major, graduation_date, former_company, 
+      endowment, medical_treatment, archives, 
+      degree_certificate, qualification, touch_able, 
+      application_date, expired_date, firstAid_expiry_date, 
+      bank_name, account_name, bank_account_no, 
+      customer_reference_no, type)
+    values (#{userId,jdbcType=INTEGER}, #{centerId,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{ic,jdbcType=VARCHAR}, #{identificationType,jdbcType=INTEGER}, 
+      #{dateOfBirth,jdbcType=DATE}, #{nationality,jdbcType=VARCHAR}, #{homeNumber,jdbcType=VARCHAR}, 
+      #{mobileNumber,jdbcType=VARCHAR}, #{maritalStatus,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{employmentDate,jdbcType=DATE}, #{resignationDate,jdbcType=DATE}, #{race,jdbcType=VARCHAR}, 
+      #{educationLevel,jdbcType=VARCHAR}, #{designation,jdbcType=VARCHAR}, #{postalCode,jdbcType=VARCHAR}, 
+      #{groupId,jdbcType=INTEGER}, #{rfid,jdbcType=VARCHAR}, #{totalOvertime,jdbcType=INTEGER}, 
+      #{totalOvertimeClaimed,jdbcType=INTEGER}, #{deleteflag,jdbcType=INTEGER}, #{unitNo,jdbcType=VARCHAR}, 
+      #{employmentStatus,jdbcType=INTEGER}, #{employmentStart,jdbcType=DATE}, #{employmentEnd,jdbcType=DATE}, 
+      #{contractPeriod,jdbcType=VARCHAR}, #{probationPeriod,jdbcType=DATE}, #{probationEnd,jdbcType=DATE}, 
+      #{registeredAddress,jdbcType=VARCHAR}, #{lengthOfService,jdbcType=VARCHAR}, #{graduationSchool,jdbcType=VARCHAR}, 
+      #{major,jdbcType=VARCHAR}, #{graduationDate,jdbcType=DATE}, #{formerCompany,jdbcType=VARCHAR}, 
+      #{endowment,jdbcType=VARCHAR}, #{medicalTreatment,jdbcType=VARCHAR}, #{archives,jdbcType=VARCHAR}, 
+      #{degreeCertificate,jdbcType=VARCHAR}, #{qualification,jdbcType=VARCHAR}, #{touchAble,jdbcType=INTEGER}, 
+      #{applicationDate,jdbcType=DATE}, #{expiredDate,jdbcType=DATE}, #{firstaidExpiryDate,jdbcType=DATE}, 
+      #{bankName,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, #{bankAccountNo,jdbcType=VARCHAR}, 
+      #{customerReferenceNo,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taidii.staffdevelopment.hq.entity.AccountsTeacher">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into accounts_teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="centerId != null">
+        center_id,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="ic != null">
+        ic,
+      </if>
+      <if test="identificationType != null">
+        identification_type,
+      </if>
+      <if test="dateOfBirth != null">
+        date_of_birth,
+      </if>
+      <if test="nationality != null">
+        nationality,
+      </if>
+      <if test="homeNumber != null">
+        home_number,
+      </if>
+      <if test="mobileNumber != null">
+        mobile_number,
+      </if>
+      <if test="maritalStatus != null">
+        marital_status,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="employmentDate != null">
+        employment_date,
+      </if>
+      <if test="resignationDate != null">
+        resignation_date,
+      </if>
+      <if test="race != null">
+        race,
+      </if>
+      <if test="educationLevel != null">
+        education_level,
+      </if>
+      <if test="designation != null">
+        designation,
+      </if>
+      <if test="postalCode != null">
+        postal_code,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="rfid != null">
+        rfid,
+      </if>
+      <if test="totalOvertime != null">
+        total_overtime,
+      </if>
+      <if test="totalOvertimeClaimed != null">
+        total_overtime_claimed,
+      </if>
+      <if test="deleteflag != null">
+        deleteflag,
+      </if>
+      <if test="unitNo != null">
+        unit_no,
+      </if>
+      <if test="employmentStatus != null">
+        employment_status,
+      </if>
+      <if test="employmentStart != null">
+        employment_start,
+      </if>
+      <if test="employmentEnd != null">
+        employment_end,
+      </if>
+      <if test="contractPeriod != null">
+        contract_period,
+      </if>
+      <if test="probationPeriod != null">
+        probation_period,
+      </if>
+      <if test="probationEnd != null">
+        probation_end,
+      </if>
+      <if test="registeredAddress != null">
+        registered_address,
+      </if>
+      <if test="lengthOfService != null">
+        length_of_service,
+      </if>
+      <if test="graduationSchool != null">
+        graduation_school,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="graduationDate != null">
+        graduation_date,
+      </if>
+      <if test="formerCompany != null">
+        former_company,
+      </if>
+      <if test="endowment != null">
+        endowment,
+      </if>
+      <if test="medicalTreatment != null">
+        medical_treatment,
+      </if>
+      <if test="archives != null">
+        archives,
+      </if>
+      <if test="degreeCertificate != null">
+        degree_certificate,
+      </if>
+      <if test="qualification != null">
+        qualification,
+      </if>
+      <if test="touchAble != null">
+        touch_able,
+      </if>
+      <if test="applicationDate != null">
+        application_date,
+      </if>
+      <if test="expiredDate != null">
+        expired_date,
+      </if>
+      <if test="firstaidExpiryDate != null">
+        firstAid_expiry_date,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="accountName != null">
+        account_name,
+      </if>
+      <if test="bankAccountNo != null">
+        bank_account_no,
+      </if>
+      <if test="customerReferenceNo != null">
+        customer_reference_no,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="centerId != null">
+        #{centerId,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="ic != null">
+        #{ic,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationType != null">
+        #{identificationType,jdbcType=INTEGER},
+      </if>
+      <if test="dateOfBirth != null">
+        #{dateOfBirth,jdbcType=DATE},
+      </if>
+      <if test="nationality != null">
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="homeNumber != null">
+        #{homeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNumber != null">
+        #{mobileNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null">
+        #{maritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentDate != null">
+        #{employmentDate,jdbcType=DATE},
+      </if>
+      <if test="resignationDate != null">
+        #{resignationDate,jdbcType=DATE},
+      </if>
+      <if test="race != null">
+        #{race,jdbcType=VARCHAR},
+      </if>
+      <if test="educationLevel != null">
+        #{educationLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="designation != null">
+        #{designation,jdbcType=VARCHAR},
+      </if>
+      <if test="postalCode != null">
+        #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="rfid != null">
+        #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="totalOvertime != null">
+        #{totalOvertime,jdbcType=INTEGER},
+      </if>
+      <if test="totalOvertimeClaimed != null">
+        #{totalOvertimeClaimed,jdbcType=INTEGER},
+      </if>
+      <if test="deleteflag != null">
+        #{deleteflag,jdbcType=INTEGER},
+      </if>
+      <if test="unitNo != null">
+        #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentStatus != null">
+        #{employmentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="employmentStart != null">
+        #{employmentStart,jdbcType=DATE},
+      </if>
+      <if test="employmentEnd != null">
+        #{employmentEnd,jdbcType=DATE},
+      </if>
+      <if test="contractPeriod != null">
+        #{contractPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="probationPeriod != null">
+        #{probationPeriod,jdbcType=DATE},
+      </if>
+      <if test="probationEnd != null">
+        #{probationEnd,jdbcType=DATE},
+      </if>
+      <if test="registeredAddress != null">
+        #{registeredAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lengthOfService != null">
+        #{lengthOfService,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationSchool != null">
+        #{graduationSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationDate != null">
+        #{graduationDate,jdbcType=DATE},
+      </if>
+      <if test="formerCompany != null">
+        #{formerCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="endowment != null">
+        #{endowment,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalTreatment != null">
+        #{medicalTreatment,jdbcType=VARCHAR},
+      </if>
+      <if test="archives != null">
+        #{archives,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeCertificate != null">
+        #{degreeCertificate,jdbcType=VARCHAR},
+      </if>
+      <if test="qualification != null">
+        #{qualification,jdbcType=VARCHAR},
+      </if>
+      <if test="touchAble != null">
+        #{touchAble,jdbcType=INTEGER},
+      </if>
+      <if test="applicationDate != null">
+        #{applicationDate,jdbcType=DATE},
+      </if>
+      <if test="expiredDate != null">
+        #{expiredDate,jdbcType=DATE},
+      </if>
+      <if test="firstaidExpiryDate != null">
+        #{firstaidExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountNo != null">
+        #{bankAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerReferenceNo != null">
+        #{customerReferenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.taidii.staffdevelopment.hq.entity.AccountsTeacherExample" resultType="java.lang.Long">
+    select count(*) from accounts_teacher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update accounts_teacher
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.centerId != null">
+        center_id = #{record.centerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.ic != null">
+        ic = #{record.ic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identificationType != null">
+        identification_type = #{record.identificationType,jdbcType=INTEGER},
+      </if>
+      <if test="record.dateOfBirth != null">
+        date_of_birth = #{record.dateOfBirth,jdbcType=DATE},
+      </if>
+      <if test="record.nationality != null">
+        nationality = #{record.nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homeNumber != null">
+        home_number = #{record.homeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobileNumber != null">
+        mobile_number = #{record.mobileNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maritalStatus != null">
+        marital_status = #{record.maritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employmentDate != null">
+        employment_date = #{record.employmentDate,jdbcType=DATE},
+      </if>
+      <if test="record.resignationDate != null">
+        resignation_date = #{record.resignationDate,jdbcType=DATE},
+      </if>
+      <if test="record.race != null">
+        race = #{record.race,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationLevel != null">
+        education_level = #{record.educationLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designation != null">
+        designation = #{record.designation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postalCode != null">
+        postal_code = #{record.postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupId != null">
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rfid != null">
+        rfid = #{record.rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalOvertime != null">
+        total_overtime = #{record.totalOvertime,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalOvertimeClaimed != null">
+        total_overtime_claimed = #{record.totalOvertimeClaimed,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleteflag != null">
+        deleteflag = #{record.deleteflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitNo != null">
+        unit_no = #{record.unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employmentStatus != null">
+        employment_status = #{record.employmentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.employmentStart != null">
+        employment_start = #{record.employmentStart,jdbcType=DATE},
+      </if>
+      <if test="record.employmentEnd != null">
+        employment_end = #{record.employmentEnd,jdbcType=DATE},
+      </if>
+      <if test="record.contractPeriod != null">
+        contract_period = #{record.contractPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.probationPeriod != null">
+        probation_period = #{record.probationPeriod,jdbcType=DATE},
+      </if>
+      <if test="record.probationEnd != null">
+        probation_end = #{record.probationEnd,jdbcType=DATE},
+      </if>
+      <if test="record.registeredAddress != null">
+        registered_address = #{record.registeredAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lengthOfService != null">
+        length_of_service = #{record.lengthOfService,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationSchool != null">
+        graduation_school = #{record.graduationSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null">
+        major = #{record.major,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationDate != null">
+        graduation_date = #{record.graduationDate,jdbcType=DATE},
+      </if>
+      <if test="record.formerCompany != null">
+        former_company = #{record.formerCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endowment != null">
+        endowment = #{record.endowment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicalTreatment != null">
+        medical_treatment = #{record.medicalTreatment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.archives != null">
+        archives = #{record.archives,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degreeCertificate != null">
+        degree_certificate = #{record.degreeCertificate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualification != null">
+        qualification = #{record.qualification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.touchAble != null">
+        touch_able = #{record.touchAble,jdbcType=INTEGER},
+      </if>
+      <if test="record.applicationDate != null">
+        application_date = #{record.applicationDate,jdbcType=DATE},
+      </if>
+      <if test="record.expiredDate != null">
+        expired_date = #{record.expiredDate,jdbcType=DATE},
+      </if>
+      <if test="record.firstaidExpiryDate != null">
+        firstAid_expiry_date = #{record.firstaidExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.bankName != null">
+        bank_name = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountName != null">
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAccountNo != null">
+        bank_account_no = #{record.bankAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerReferenceNo != null">
+        customer_reference_no = #{record.customerReferenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update accounts_teacher
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      center_id = #{record.centerId,jdbcType=INTEGER},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=INTEGER},
+      ic = #{record.ic,jdbcType=VARCHAR},
+      identification_type = #{record.identificationType,jdbcType=INTEGER},
+      date_of_birth = #{record.dateOfBirth,jdbcType=DATE},
+      nationality = #{record.nationality,jdbcType=VARCHAR},
+      home_number = #{record.homeNumber,jdbcType=VARCHAR},
+      mobile_number = #{record.mobileNumber,jdbcType=VARCHAR},
+      marital_status = #{record.maritalStatus,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      employment_date = #{record.employmentDate,jdbcType=DATE},
+      resignation_date = #{record.resignationDate,jdbcType=DATE},
+      race = #{record.race,jdbcType=VARCHAR},
+      education_level = #{record.educationLevel,jdbcType=VARCHAR},
+      designation = #{record.designation,jdbcType=VARCHAR},
+      postal_code = #{record.postalCode,jdbcType=VARCHAR},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      rfid = #{record.rfid,jdbcType=VARCHAR},
+      total_overtime = #{record.totalOvertime,jdbcType=INTEGER},
+      total_overtime_claimed = #{record.totalOvertimeClaimed,jdbcType=INTEGER},
+      deleteflag = #{record.deleteflag,jdbcType=INTEGER},
+      unit_no = #{record.unitNo,jdbcType=VARCHAR},
+      employment_status = #{record.employmentStatus,jdbcType=INTEGER},
+      employment_start = #{record.employmentStart,jdbcType=DATE},
+      employment_end = #{record.employmentEnd,jdbcType=DATE},
+      contract_period = #{record.contractPeriod,jdbcType=VARCHAR},
+      probation_period = #{record.probationPeriod,jdbcType=DATE},
+      probation_end = #{record.probationEnd,jdbcType=DATE},
+      registered_address = #{record.registeredAddress,jdbcType=VARCHAR},
+      length_of_service = #{record.lengthOfService,jdbcType=VARCHAR},
+      graduation_school = #{record.graduationSchool,jdbcType=VARCHAR},
+      major = #{record.major,jdbcType=VARCHAR},
+      graduation_date = #{record.graduationDate,jdbcType=DATE},
+      former_company = #{record.formerCompany,jdbcType=VARCHAR},
+      endowment = #{record.endowment,jdbcType=VARCHAR},
+      medical_treatment = #{record.medicalTreatment,jdbcType=VARCHAR},
+      archives = #{record.archives,jdbcType=VARCHAR},
+      degree_certificate = #{record.degreeCertificate,jdbcType=VARCHAR},
+      qualification = #{record.qualification,jdbcType=VARCHAR},
+      touch_able = #{record.touchAble,jdbcType=INTEGER},
+      application_date = #{record.applicationDate,jdbcType=DATE},
+      expired_date = #{record.expiredDate,jdbcType=DATE},
+      firstAid_expiry_date = #{record.firstaidExpiryDate,jdbcType=DATE},
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      account_name = #{record.accountName,jdbcType=VARCHAR},
+      bank_account_no = #{record.bankAccountNo,jdbcType=VARCHAR},
+      customer_reference_no = #{record.customerReferenceNo,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taidii.staffdevelopment.hq.entity.AccountsTeacher">
+    update accounts_teacher
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="centerId != null">
+        center_id = #{centerId,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="ic != null">
+        ic = #{ic,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationType != null">
+        identification_type = #{identificationType,jdbcType=INTEGER},
+      </if>
+      <if test="dateOfBirth != null">
+        date_of_birth = #{dateOfBirth,jdbcType=DATE},
+      </if>
+      <if test="nationality != null">
+        nationality = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="homeNumber != null">
+        home_number = #{homeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNumber != null">
+        mobile_number = #{mobileNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null">
+        marital_status = #{maritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentDate != null">
+        employment_date = #{employmentDate,jdbcType=DATE},
+      </if>
+      <if test="resignationDate != null">
+        resignation_date = #{resignationDate,jdbcType=DATE},
+      </if>
+      <if test="race != null">
+        race = #{race,jdbcType=VARCHAR},
+      </if>
+      <if test="educationLevel != null">
+        education_level = #{educationLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="designation != null">
+        designation = #{designation,jdbcType=VARCHAR},
+      </if>
+      <if test="postalCode != null">
+        postal_code = #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="rfid != null">
+        rfid = #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="totalOvertime != null">
+        total_overtime = #{totalOvertime,jdbcType=INTEGER},
+      </if>
+      <if test="totalOvertimeClaimed != null">
+        total_overtime_claimed = #{totalOvertimeClaimed,jdbcType=INTEGER},
+      </if>
+      <if test="deleteflag != null">
+        deleteflag = #{deleteflag,jdbcType=INTEGER},
+      </if>
+      <if test="unitNo != null">
+        unit_no = #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentStatus != null">
+        employment_status = #{employmentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="employmentStart != null">
+        employment_start = #{employmentStart,jdbcType=DATE},
+      </if>
+      <if test="employmentEnd != null">
+        employment_end = #{employmentEnd,jdbcType=DATE},
+      </if>
+      <if test="contractPeriod != null">
+        contract_period = #{contractPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="probationPeriod != null">
+        probation_period = #{probationPeriod,jdbcType=DATE},
+      </if>
+      <if test="probationEnd != null">
+        probation_end = #{probationEnd,jdbcType=DATE},
+      </if>
+      <if test="registeredAddress != null">
+        registered_address = #{registeredAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lengthOfService != null">
+        length_of_service = #{lengthOfService,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationSchool != null">
+        graduation_school = #{graduationSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationDate != null">
+        graduation_date = #{graduationDate,jdbcType=DATE},
+      </if>
+      <if test="formerCompany != null">
+        former_company = #{formerCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="endowment != null">
+        endowment = #{endowment,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalTreatment != null">
+        medical_treatment = #{medicalTreatment,jdbcType=VARCHAR},
+      </if>
+      <if test="archives != null">
+        archives = #{archives,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeCertificate != null">
+        degree_certificate = #{degreeCertificate,jdbcType=VARCHAR},
+      </if>
+      <if test="qualification != null">
+        qualification = #{qualification,jdbcType=VARCHAR},
+      </if>
+      <if test="touchAble != null">
+        touch_able = #{touchAble,jdbcType=INTEGER},
+      </if>
+      <if test="applicationDate != null">
+        application_date = #{applicationDate,jdbcType=DATE},
+      </if>
+      <if test="expiredDate != null">
+        expired_date = #{expiredDate,jdbcType=DATE},
+      </if>
+      <if test="firstaidExpiryDate != null">
+        firstAid_expiry_date = #{firstaidExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountNo != null">
+        bank_account_no = #{bankAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerReferenceNo != null">
+        customer_reference_no = #{customerReferenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taidii.staffdevelopment.hq.entity.AccountsTeacher">
+    update accounts_teacher
+    set user_id = #{userId,jdbcType=INTEGER},
+      center_id = #{centerId,jdbcType=INTEGER},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      ic = #{ic,jdbcType=VARCHAR},
+      identification_type = #{identificationType,jdbcType=INTEGER},
+      date_of_birth = #{dateOfBirth,jdbcType=DATE},
+      nationality = #{nationality,jdbcType=VARCHAR},
+      home_number = #{homeNumber,jdbcType=VARCHAR},
+      mobile_number = #{mobileNumber,jdbcType=VARCHAR},
+      marital_status = #{maritalStatus,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      employment_date = #{employmentDate,jdbcType=DATE},
+      resignation_date = #{resignationDate,jdbcType=DATE},
+      race = #{race,jdbcType=VARCHAR},
+      education_level = #{educationLevel,jdbcType=VARCHAR},
+      designation = #{designation,jdbcType=VARCHAR},
+      postal_code = #{postalCode,jdbcType=VARCHAR},
+      group_id = #{groupId,jdbcType=INTEGER},
+      rfid = #{rfid,jdbcType=VARCHAR},
+      total_overtime = #{totalOvertime,jdbcType=INTEGER},
+      total_overtime_claimed = #{totalOvertimeClaimed,jdbcType=INTEGER},
+      deleteflag = #{deleteflag,jdbcType=INTEGER},
+      unit_no = #{unitNo,jdbcType=VARCHAR},
+      employment_status = #{employmentStatus,jdbcType=INTEGER},
+      employment_start = #{employmentStart,jdbcType=DATE},
+      employment_end = #{employmentEnd,jdbcType=DATE},
+      contract_period = #{contractPeriod,jdbcType=VARCHAR},
+      probation_period = #{probationPeriod,jdbcType=DATE},
+      probation_end = #{probationEnd,jdbcType=DATE},
+      registered_address = #{registeredAddress,jdbcType=VARCHAR},
+      length_of_service = #{lengthOfService,jdbcType=VARCHAR},
+      graduation_school = #{graduationSchool,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      graduation_date = #{graduationDate,jdbcType=DATE},
+      former_company = #{formerCompany,jdbcType=VARCHAR},
+      endowment = #{endowment,jdbcType=VARCHAR},
+      medical_treatment = #{medicalTreatment,jdbcType=VARCHAR},
+      archives = #{archives,jdbcType=VARCHAR},
+      degree_certificate = #{degreeCertificate,jdbcType=VARCHAR},
+      qualification = #{qualification,jdbcType=VARCHAR},
+      touch_able = #{touchAble,jdbcType=INTEGER},
+      application_date = #{applicationDate,jdbcType=DATE},
+      expired_date = #{expiredDate,jdbcType=DATE},
+      firstAid_expiry_date = #{firstaidExpiryDate,jdbcType=DATE},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      bank_account_no = #{bankAccountNo,jdbcType=VARCHAR},
+      customer_reference_no = #{customerReferenceNo,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

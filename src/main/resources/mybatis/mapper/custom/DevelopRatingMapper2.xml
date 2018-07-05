@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.dao.mapper.custom.DevelopRatingMapper2">
+  
+  <!-- 通过条件查询分数，顺序排序 -->
+  <select id="queryBy" resultType="com.taidii.staffdevelopment.dto.RatingDTO">
+		SELECT
+			id,
+			score,
+			name,
+			rate_keys rateKeys
+		FROM
+			develop_rating
+		WHERE
+			school_id = #{schoolId}
+		AND year = #{year}
+		AND is_delete = #{isDelete}
+		AND period = #{period}
+		ORDER BY score 
+  </select>
+	<select id="fetchSkillLevelList" resultType="com.taidii.staffdevelopment.dto.settings.SkillLevelDto">
+		SELECT
+			d.id id,
+			d.`name` name,
+			l.id dutyLevelId,
+			l.`name` dutyLevelName
+		FROM
+			develop_duty d
+		LEFT JOIN develop_duty_level l ON d.id = l.duty_id
+		where l.is_delete=0
+		ORDER BY
+			d.id ASC,
+			l.levels ASC
+  </select>
+	<select id="fetchNotLevelTeacher" resultType="com.taidii.staffdevelopment.dto.settings.TeacherDto">
+		SELECT
+			a.id id,
+			CONCAT_WS(
+				' ',
+				a.first_name,
+				a.last_name
+			) name,
+			CONCAT(
+		      'http://7xj2zq.com5.z0.glb.qiniucdn.com/',
+		      t.avatar
+	        ) url
+		FROM
+			accounts_teacher t
+		INNER JOIN auth_user a ON t.user_id = a.id
+		WHERE
+			t.center_id = #{schoolId}
+		AND a.is_active = 1
+		AND a.id NOT IN (
+			SELECT
+				u.user_id
+			FROM
+				develop_user_duty_level u
+			WHERE
+				u.is_delete = 0
+		)
+  </select>
+	<select id="fetchStaffLevelList" resultType="com.taidii.staffdevelopment.dto.settings.StaffLevelTeachersDto">
+		SELECT
+			d.id id,
+			d.`name` dutyName,
+			d.duty_id level
+		FROM
+			develop_duty_level d
+		ORDER BY
+			d.duty_id ASC,
+			d.levels ASC;
+  </select>
+	<select id="fetchStaffLevelTeacherList" resultType="com.taidii.staffdevelopment.dto.settings.TeacherDto">
+		SELECT
+			a.id id,
+			CONCAT_WS(
+				' ',
+				a.first_name,
+				a.last_name
+			) name,
+			CONCAT(
+		      'http://7xj2zq.com5.z0.glb.qiniucdn.com/',
+		      t.avatar
+	        ) url
+		FROM
+			accounts_teacher t
+		INNER JOIN auth_user a ON t.user_id = a.id
+		WHERE
+			t.center_id = #{schoolId}
+		AND a.is_active = 1
+		AND a.id IN (
+			SELECT
+				u.user_id
+			FROM
+				develop_user_duty_level u
+			WHERE
+				u.is_delete = 0
+				AND u.duty_level_id = #{levelId}
+		)
+  </select>
+	<select id="fetchSkillLevelGrade" resultType="java.lang.Integer">
+		SELECT
+			COUNT(d.duty_id)
+		FROM
+			develop_duty_level d
+		WHERE
+			d.is_delete = 0
+		GROUP BY
+			d.duty_id
+		ORDER BY
+			d.duty_id ASC
+  </select>
+	<select id="fetchYearList" resultType="java.lang.Integer">
+        SELECT DISTINCT
+            YEAR
+        FROM
+            develop_time_setting
+        WHERE
+            is_delete = 0
+        AND school_id = #{schoolId}
+        ORDER BY
+            YEAR DESC
+  </select>
+</mapper>

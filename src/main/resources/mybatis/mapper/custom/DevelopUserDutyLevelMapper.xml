@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.dao.mapper.custom.DevelopUserDutyLevelMapper2">
+  
+  <resultMap id="BaseResultMap" type="com.taidii.staffdevelopment.entity.DevelopUserDutyLevel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="duty_level_id" jdbcType="INTEGER" property="dutyLevelId" />
+  </resultMap>
+  
+  <!-- 获取一个学校所有有职务的用户 -->
+  <select id="getSchoolAllUser" resultMap="BaseResultMap">
+  	SELECT
+		udl.*
+	FROM
+		develop_user_duty_level udl,
+		auth_user au,
+		accounts_teacher act
+	WHERE
+		au.id = act.user_id
+	AND au.id = udl.user_id
+	AND act.center_id = #{schoolId}
+	AND udl.is_delete = #{isDelete}
+  </select>
+  
+</mapper>

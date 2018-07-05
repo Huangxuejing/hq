@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.EnrichmentKlassscheduleMapper">
+  <resultMap id="BaseResultMap" type="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassschedule">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="hq_id" jdbcType="INTEGER" property="hqId" />
+    <result column="center_id" jdbcType="INTEGER" property="centerId" />
+    <result column="klassname" jdbcType="VARCHAR" property="klassname" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="level_id" jdbcType="INTEGER" property="levelId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="unit_price" jdbcType="DECIMAL" property="unitPrice" />
+    <result column="number_of_class" jdbcType="INTEGER" property="numberOfClass" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="assistant_id" jdbcType="INTEGER" property="assistantId" />
+    <result column="room_id" jdbcType="INTEGER" property="roomId" />
+    <result column="capacity" jdbcType="INTEGER" property="capacity" />
+    <result column="date_from" jdbcType="DATE" property="dateFrom" />
+    <result column="date_to" jdbcType="DATE" property="dateTo" />
+    <result column="date_pending" jdbcType="BIT" property="datePending" />
+    <result column="created_date" jdbcType="DATE" property="createdDate" />
+    <result column="created_by_id" jdbcType="INTEGER" property="createdById" />
+    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
+    <result column="last_update_by_id" jdbcType="INTEGER" property="lastUpdateById" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, hq_id, center_id, klassname, course_id, level_id, type, unit_price, number_of_class, 
+    teacher_id, assistant_id, room_id, capacity, date_from, date_to, date_pending, created_date, 
+    created_by_id, last_update, last_update_by_id, remarks
+  </sql>
+  <select id="selectByExample" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassscheduleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enrichment_klassschedule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enrichment_klassschedule
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enrichment_klassschedule
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassscheduleExample">
+    delete from enrichment_klassschedule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassschedule">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enrichment_klassschedule (hq_id, center_id, klassname, 
+      course_id, level_id, type, 
+      unit_price, number_of_class, teacher_id, 
+      assistant_id, room_id, capacity, 
+      date_from, date_to, date_pending, 
+      created_date, created_by_id, last_update, 
+      last_update_by_id, remarks)
+    values (#{hqId,jdbcType=INTEGER}, #{centerId,jdbcType=INTEGER}, #{klassname,jdbcType=VARCHAR}, 
+      #{courseId,jdbcType=INTEGER}, #{levelId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{unitPrice,jdbcType=DECIMAL}, #{numberOfClass,jdbcType=INTEGER}, #{teacherId,jdbcType=INTEGER}, 
+      #{assistantId,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{capacity,jdbcType=INTEGER}, 
+      #{dateFrom,jdbcType=DATE}, #{dateTo,jdbcType=DATE}, #{datePending,jdbcType=BIT}, 
+      #{createdDate,jdbcType=DATE}, #{createdById,jdbcType=INTEGER}, #{lastUpdate,jdbcType=TIMESTAMP}, 
+      #{lastUpdateById,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassschedule">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enrichment_klassschedule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hqId != null">
+        hq_id,
+      </if>
+      <if test="centerId != null">
+        center_id,
+      </if>
+      <if test="klassname != null">
+        klassname,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="levelId != null">
+        level_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="unitPrice != null">
+        unit_price,
+      </if>
+      <if test="numberOfClass != null">
+        number_of_class,
+      </if>
+      <if test="teacherId != null">
+        teacher_id,
+      </if>
+      <if test="assistantId != null">
+        assistant_id,
+      </if>
+      <if test="roomId != null">
+        room_id,
+      </if>
+      <if test="capacity != null">
+        capacity,
+      </if>
+      <if test="dateFrom != null">
+        date_from,
+      </if>
+      <if test="dateTo != null">
+        date_to,
+      </if>
+      <if test="datePending != null">
+        date_pending,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="createdById != null">
+        created_by_id,
+      </if>
+      <if test="lastUpdate != null">
+        last_update,
+      </if>
+      <if test="lastUpdateById != null">
+        last_update_by_id,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hqId != null">
+        #{hqId,jdbcType=INTEGER},
+      </if>
+      <if test="centerId != null">
+        #{centerId,jdbcType=INTEGER},
+      </if>
+      <if test="klassname != null">
+        #{klassname,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="levelId != null">
+        #{levelId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null">
+        #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="numberOfClass != null">
+        #{numberOfClass,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="assistantId != null">
+        #{assistantId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="capacity != null">
+        #{capacity,jdbcType=INTEGER},
+      </if>
+      <if test="dateFrom != null">
+        #{dateFrom,jdbcType=DATE},
+      </if>
+      <if test="dateTo != null">
+        #{dateTo,jdbcType=DATE},
+      </if>
+      <if test="datePending != null">
+        #{datePending,jdbcType=BIT},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=DATE},
+      </if>
+      <if test="createdById != null">
+        #{createdById,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdate != null">
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateById != null">
+        #{lastUpdateById,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassscheduleExample" resultType="java.lang.Long">
+    select count(*) from enrichment_klassschedule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enrichment_klassschedule
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.hqId != null">
+        hq_id = #{record.hqId,jdbcType=INTEGER},
+      </if>
+      <if test="record.centerId != null">
+        center_id = #{record.centerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.klassname != null">
+        klassname = #{record.klassname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseId != null">
+        course_id = #{record.courseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.levelId != null">
+        level_id = #{record.levelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitPrice != null">
+        unit_price = #{record.unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.numberOfClass != null">
+        number_of_class = #{record.numberOfClass,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherId != null">
+        teacher_id = #{record.teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.assistantId != null">
+        assistant_id = #{record.assistantId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomId != null">
+        room_id = #{record.roomId,jdbcType=INTEGER},
+      </if>
+      <if test="record.capacity != null">
+        capacity = #{record.capacity,jdbcType=INTEGER},
+      </if>
+      <if test="record.dateFrom != null">
+        date_from = #{record.dateFrom,jdbcType=DATE},
+      </if>
+      <if test="record.dateTo != null">
+        date_to = #{record.dateTo,jdbcType=DATE},
+      </if>
+      <if test="record.datePending != null">
+        date_pending = #{record.datePending,jdbcType=BIT},
+      </if>
+      <if test="record.createdDate != null">
+        created_date = #{record.createdDate,jdbcType=DATE},
+      </if>
+      <if test="record.createdById != null">
+        created_by_id = #{record.createdById,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastUpdate != null">
+        last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdateById != null">
+        last_update_by_id = #{record.lastUpdateById,jdbcType=INTEGER},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enrichment_klassschedule
+    set id = #{record.id,jdbcType=INTEGER},
+      hq_id = #{record.hqId,jdbcType=INTEGER},
+      center_id = #{record.centerId,jdbcType=INTEGER},
+      klassname = #{record.klassname,jdbcType=VARCHAR},
+      course_id = #{record.courseId,jdbcType=INTEGER},
+      level_id = #{record.levelId,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      unit_price = #{record.unitPrice,jdbcType=DECIMAL},
+      number_of_class = #{record.numberOfClass,jdbcType=INTEGER},
+      teacher_id = #{record.teacherId,jdbcType=INTEGER},
+      assistant_id = #{record.assistantId,jdbcType=INTEGER},
+      room_id = #{record.roomId,jdbcType=INTEGER},
+      capacity = #{record.capacity,jdbcType=INTEGER},
+      date_from = #{record.dateFrom,jdbcType=DATE},
+      date_to = #{record.dateTo,jdbcType=DATE},
+      date_pending = #{record.datePending,jdbcType=BIT},
+      created_date = #{record.createdDate,jdbcType=DATE},
+      created_by_id = #{record.createdById,jdbcType=INTEGER},
+      last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      last_update_by_id = #{record.lastUpdateById,jdbcType=INTEGER},
+      remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassschedule">
+    update enrichment_klassschedule
+    <set>
+      <if test="hqId != null">
+        hq_id = #{hqId,jdbcType=INTEGER},
+      </if>
+      <if test="centerId != null">
+        center_id = #{centerId,jdbcType=INTEGER},
+      </if>
+      <if test="klassname != null">
+        klassname = #{klassname,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="levelId != null">
+        level_id = #{levelId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null">
+        unit_price = #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="numberOfClass != null">
+        number_of_class = #{numberOfClass,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null">
+        teacher_id = #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="assistantId != null">
+        assistant_id = #{assistantId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        room_id = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="capacity != null">
+        capacity = #{capacity,jdbcType=INTEGER},
+      </if>
+      <if test="dateFrom != null">
+        date_from = #{dateFrom,jdbcType=DATE},
+      </if>
+      <if test="dateTo != null">
+        date_to = #{dateTo,jdbcType=DATE},
+      </if>
+      <if test="datePending != null">
+        date_pending = #{datePending,jdbcType=BIT},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=DATE},
+      </if>
+      <if test="createdById != null">
+        created_by_id = #{createdById,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdate != null">
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateById != null">
+        last_update_by_id = #{lastUpdateById,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassschedule">
+    update enrichment_klassschedule
+    set hq_id = #{hqId,jdbcType=INTEGER},
+      center_id = #{centerId,jdbcType=INTEGER},
+      klassname = #{klassname,jdbcType=VARCHAR},
+      course_id = #{courseId,jdbcType=INTEGER},
+      level_id = #{levelId,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      unit_price = #{unitPrice,jdbcType=DECIMAL},
+      number_of_class = #{numberOfClass,jdbcType=INTEGER},
+      teacher_id = #{teacherId,jdbcType=INTEGER},
+      assistant_id = #{assistantId,jdbcType=INTEGER},
+      room_id = #{roomId,jdbcType=INTEGER},
+      capacity = #{capacity,jdbcType=INTEGER},
+      date_from = #{dateFrom,jdbcType=DATE},
+      date_to = #{dateTo,jdbcType=DATE},
+      date_pending = #{datePending,jdbcType=BIT},
+      created_date = #{createdDate,jdbcType=DATE},
+      created_by_id = #{createdById,jdbcType=INTEGER},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      last_update_by_id = #{lastUpdateById,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.StudentsStudentMapper">
+  <resultMap id="BaseResultMap" type="com.taidii.staffdevelopment.hq.entity.StudentsStudent">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="fullname" jdbcType="VARCHAR" property="fullname" />
+    <result column="ic" jdbcType="VARCHAR" property="ic" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
+    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
+    <result column="race" jdbcType="VARCHAR" property="race" />
+    <result column="religion" jdbcType="VARCHAR" property="religion" />
+    <result column="mother_tongue" jdbcType="VARCHAR" property="motherTongue" />
+    <result column="language_spoken" jdbcType="VARCHAR" property="languageSpoken" />
+    <result column="medical_record" jdbcType="VARCHAR" property="medicalRecord" />
+    <result column="special_needs" jdbcType="VARCHAR" property="specialNeeds" />
+    <result column="enter_date" jdbcType="DATE" property="enterDate" />
+    <result column="leave_date" jdbcType="DATE" property="leaveDate" />
+    <result column="home_address" jdbcType="VARCHAR" property="homeAddress" />
+    <result column="emergency_contact_no" jdbcType="VARCHAR" property="emergencyContactNo" />
+    <result column="student_care_type" jdbcType="INTEGER" property="studentCareType" />
+    <result column="program_type" jdbcType="INTEGER" property="programType" />
+    <result column="postal_code" jdbcType="VARCHAR" property="postalCode" />
+    <result column="registration_no" jdbcType="VARCHAR" property="registrationNo" />
+    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
+    <result column="unit_no" jdbcType="VARCHAR" property="unitNo" />
+    <result column="emergency_contact" jdbcType="VARCHAR" property="emergencyContact" />
+    <result column="country" jdbcType="INTEGER" property="country" />
+    <result column="touch_able" jdbcType="INTEGER" property="touchAble" />
+    <result column="birth_range" jdbcType="INTEGER" property="birthRange" />
+    <result column="alternative_care_name" jdbcType="VARCHAR" property="alternativeCareName" />
+    <result column="alternative_care_contact_no" jdbcType="VARCHAR" property="alternativeCareContactNo" />
+    <result column="alternative_care_adress" jdbcType="VARCHAR" property="alternativeCareAdress" />
+    <result column="alternative_care_relationship" jdbcType="VARCHAR" property="alternativeCareRelationship" />
+    <result column="touch_password" jdbcType="VARCHAR" property="touchPassword" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="enrichment_center_id" jdbcType="INTEGER" property="enrichmentCenterId" />
+    <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="issued_by" jdbcType="VARCHAR" property="issuedBy" />
+    <result column="total_lessons" jdbcType="INTEGER" property="totalLessons" />
+    <result column="left_lessons" jdbcType="INTEGER" property="leftLessons" />
+    <result column="registration_no_template" jdbcType="VARCHAR" property="registrationNoTemplate" />
+    <result column="know_us" jdbcType="VARCHAR" property="knowUs" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, avatar, fullname, ic, gender, date_of_birth, nationality, race, religion, mother_tongue, 
+    language_spoken, medical_record, special_needs, enter_date, leave_date, home_address, 
+    emergency_contact_no, student_care_type, program_type, postal_code, registration_no, 
+    rfid, unit_no, emergency_contact, country, touch_able, birth_range, alternative_care_name, 
+    alternative_care_contact_no, alternative_care_adress, alternative_care_relationship, 
+    touch_password, nickname, enrichment_center_id, date_created, school, level, issued_by, 
+    total_lessons, left_lessons, registration_no_template, know_us, remarks
+  </sql>
+  <select id="selectByExample" parameterType="com.taidii.staffdevelopment.hq.entity.StudentsStudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from students_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from students_student
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from students_student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.taidii.staffdevelopment.hq.entity.StudentsStudentExample">
+    delete from students_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.taidii.staffdevelopment.hq.entity.StudentsStudent">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into students_student (avatar, fullname, ic, 
+      gender, date_of_birth, nationality, 
+      race, religion, mother_tongue, 
+      language_spoken, medical_record, special_needs, 
+      enter_date, leave_date, home_address, 
+      emergency_contact_no, student_care_type, program_type, 
+      postal_code, registration_no, rfid, 
+      unit_no, emergency_contact, country, 
+      touch_able, birth_range, alternative_care_name, 
+      alternative_care_contact_no, alternative_care_adress, 
+      alternative_care_relationship, touch_password, 
+      nickname, enrichment_center_id, date_created, 
+      school, level, issued_by, 
+      total_lessons, left_lessons, registration_no_template, 
+      know_us, remarks)
+    values (#{avatar,jdbcType=VARCHAR}, #{fullname,jdbcType=VARCHAR}, #{ic,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{dateOfBirth,jdbcType=DATE}, #{nationality,jdbcType=VARCHAR}, 
+      #{race,jdbcType=VARCHAR}, #{religion,jdbcType=VARCHAR}, #{motherTongue,jdbcType=VARCHAR}, 
+      #{languageSpoken,jdbcType=VARCHAR}, #{medicalRecord,jdbcType=VARCHAR}, #{specialNeeds,jdbcType=VARCHAR}, 
+      #{enterDate,jdbcType=DATE}, #{leaveDate,jdbcType=DATE}, #{homeAddress,jdbcType=VARCHAR}, 
+      #{emergencyContactNo,jdbcType=VARCHAR}, #{studentCareType,jdbcType=INTEGER}, #{programType,jdbcType=INTEGER}, 
+      #{postalCode,jdbcType=VARCHAR}, #{registrationNo,jdbcType=VARCHAR}, #{rfid,jdbcType=VARCHAR}, 
+      #{unitNo,jdbcType=VARCHAR}, #{emergencyContact,jdbcType=VARCHAR}, #{country,jdbcType=INTEGER}, 
+      #{touchAble,jdbcType=INTEGER}, #{birthRange,jdbcType=INTEGER}, #{alternativeCareName,jdbcType=VARCHAR}, 
+      #{alternativeCareContactNo,jdbcType=VARCHAR}, #{alternativeCareAdress,jdbcType=VARCHAR}, 
+      #{alternativeCareRelationship,jdbcType=VARCHAR}, #{touchPassword,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{enrichmentCenterId,jdbcType=INTEGER}, #{dateCreated,jdbcType=TIMESTAMP}, 
+      #{school,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{issuedBy,jdbcType=VARCHAR}, 
+      #{totalLessons,jdbcType=INTEGER}, #{leftLessons,jdbcType=INTEGER}, #{registrationNoTemplate,jdbcType=VARCHAR}, 
+      #{knowUs,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taidii.staffdevelopment.hq.entity.StudentsStudent">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into students_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="fullname != null">
+        fullname,
+      </if>
+      <if test="ic != null">
+        ic,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="dateOfBirth != null">
+        date_of_birth,
+      </if>
+      <if test="nationality != null">
+        nationality,
+      </if>
+      <if test="race != null">
+        race,
+      </if>
+      <if test="religion != null">
+        religion,
+      </if>
+      <if test="motherTongue != null">
+        mother_tongue,
+      </if>
+      <if test="languageSpoken != null">
+        language_spoken,
+      </if>
+      <if test="medicalRecord != null">
+        medical_record,
+      </if>
+      <if test="specialNeeds != null">
+        special_needs,
+      </if>
+      <if test="enterDate != null">
+        enter_date,
+      </if>
+      <if test="leaveDate != null">
+        leave_date,
+      </if>
+      <if test="homeAddress != null">
+        home_address,
+      </if>
+      <if test="emergencyContactNo != null">
+        emergency_contact_no,
+      </if>
+      <if test="studentCareType != null">
+        student_care_type,
+      </if>
+      <if test="programType != null">
+        program_type,
+      </if>
+      <if test="postalCode != null">
+        postal_code,
+      </if>
+      <if test="registrationNo != null">
+        registration_no,
+      </if>
+      <if test="rfid != null">
+        rfid,
+      </if>
+      <if test="unitNo != null">
+        unit_no,
+      </if>
+      <if test="emergencyContact != null">
+        emergency_contact,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="touchAble != null">
+        touch_able,
+      </if>
+      <if test="birthRange != null">
+        birth_range,
+      </if>
+      <if test="alternativeCareName != null">
+        alternative_care_name,
+      </if>
+      <if test="alternativeCareContactNo != null">
+        alternative_care_contact_no,
+      </if>
+      <if test="alternativeCareAdress != null">
+        alternative_care_adress,
+      </if>
+      <if test="alternativeCareRelationship != null">
+        alternative_care_relationship,
+      </if>
+      <if test="touchPassword != null">
+        touch_password,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="enrichmentCenterId != null">
+        enrichment_center_id,
+      </if>
+      <if test="dateCreated != null">
+        date_created,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="issuedBy != null">
+        issued_by,
+      </if>
+      <if test="totalLessons != null">
+        total_lessons,
+      </if>
+      <if test="leftLessons != null">
+        left_lessons,
+      </if>
+      <if test="registrationNoTemplate != null">
+        registration_no_template,
+      </if>
+      <if test="knowUs != null">
+        know_us,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null">
+        #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="ic != null">
+        #{ic,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="dateOfBirth != null">
+        #{dateOfBirth,jdbcType=DATE},
+      </if>
+      <if test="nationality != null">
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="race != null">
+        #{race,jdbcType=VARCHAR},
+      </if>
+      <if test="religion != null">
+        #{religion,jdbcType=VARCHAR},
+      </if>
+      <if test="motherTongue != null">
+        #{motherTongue,jdbcType=VARCHAR},
+      </if>
+      <if test="languageSpoken != null">
+        #{languageSpoken,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalRecord != null">
+        #{medicalRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="specialNeeds != null">
+        #{specialNeeds,jdbcType=VARCHAR},
+      </if>
+      <if test="enterDate != null">
+        #{enterDate,jdbcType=DATE},
+      </if>
+      <if test="leaveDate != null">
+        #{leaveDate,jdbcType=DATE},
+      </if>
+      <if test="homeAddress != null">
+        #{homeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactNo != null">
+        #{emergencyContactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCareType != null">
+        #{studentCareType,jdbcType=INTEGER},
+      </if>
+      <if test="programType != null">
+        #{programType,jdbcType=INTEGER},
+      </if>
+      <if test="postalCode != null">
+        #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="registrationNo != null">
+        #{registrationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rfid != null">
+        #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null">
+        #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContact != null">
+        #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=INTEGER},
+      </if>
+      <if test="touchAble != null">
+        #{touchAble,jdbcType=INTEGER},
+      </if>
+      <if test="birthRange != null">
+        #{birthRange,jdbcType=INTEGER},
+      </if>
+      <if test="alternativeCareName != null">
+        #{alternativeCareName,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeCareContactNo != null">
+        #{alternativeCareContactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeCareAdress != null">
+        #{alternativeCareAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeCareRelationship != null">
+        #{alternativeCareRelationship,jdbcType=VARCHAR},
+      </if>
+      <if test="touchPassword != null">
+        #{touchPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="enrichmentCenterId != null">
+        #{enrichmentCenterId,jdbcType=INTEGER},
+      </if>
+      <if test="dateCreated != null">
+        #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedBy != null">
+        #{issuedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="totalLessons != null">
+        #{totalLessons,jdbcType=INTEGER},
+      </if>
+      <if test="leftLessons != null">
+        #{leftLessons,jdbcType=INTEGER},
+      </if>
+      <if test="registrationNoTemplate != null">
+        #{registrationNoTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="knowUs != null">
+        #{knowUs,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.taidii.staffdevelopment.hq.entity.StudentsStudentExample" resultType="java.lang.Long">
+    select count(*) from students_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update students_student
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullname != null">
+        fullname = #{record.fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ic != null">
+        ic = #{record.ic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.dateOfBirth != null">
+        date_of_birth = #{record.dateOfBirth,jdbcType=DATE},
+      </if>
+      <if test="record.nationality != null">
+        nationality = #{record.nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.race != null">
+        race = #{record.race,jdbcType=VARCHAR},
+      </if>
+      <if test="record.religion != null">
+        religion = #{record.religion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherTongue != null">
+        mother_tongue = #{record.motherTongue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.languageSpoken != null">
+        language_spoken = #{record.languageSpoken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicalRecord != null">
+        medical_record = #{record.medicalRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialNeeds != null">
+        special_needs = #{record.specialNeeds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterDate != null">
+        enter_date = #{record.enterDate,jdbcType=DATE},
+      </if>
+      <if test="record.leaveDate != null">
+        leave_date = #{record.leaveDate,jdbcType=DATE},
+      </if>
+      <if test="record.homeAddress != null">
+        home_address = #{record.homeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergencyContactNo != null">
+        emergency_contact_no = #{record.emergencyContactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentCareType != null">
+        student_care_type = #{record.studentCareType,jdbcType=INTEGER},
+      </if>
+      <if test="record.programType != null">
+        program_type = #{record.programType,jdbcType=INTEGER},
+      </if>
+      <if test="record.postalCode != null">
+        postal_code = #{record.postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registrationNo != null">
+        registration_no = #{record.registrationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rfid != null">
+        rfid = #{record.rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitNo != null">
+        unit_no = #{record.unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergencyContact != null">
+        emergency_contact = #{record.emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null">
+        country = #{record.country,jdbcType=INTEGER},
+      </if>
+      <if test="record.touchAble != null">
+        touch_able = #{record.touchAble,jdbcType=INTEGER},
+      </if>
+      <if test="record.birthRange != null">
+        birth_range = #{record.birthRange,jdbcType=INTEGER},
+      </if>
+      <if test="record.alternativeCareName != null">
+        alternative_care_name = #{record.alternativeCareName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alternativeCareContactNo != null">
+        alternative_care_contact_no = #{record.alternativeCareContactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alternativeCareAdress != null">
+        alternative_care_adress = #{record.alternativeCareAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alternativeCareRelationship != null">
+        alternative_care_relationship = #{record.alternativeCareRelationship,jdbcType=VARCHAR},
+      </if>
+      <if test="record.touchPassword != null">
+        touch_password = #{record.touchPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enrichmentCenterId != null">
+        enrichment_center_id = #{record.enrichmentCenterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dateCreated != null">
+        date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.school != null">
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null">
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuedBy != null">
+        issued_by = #{record.issuedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalLessons != null">
+        total_lessons = #{record.totalLessons,jdbcType=INTEGER},
+      </if>
+      <if test="record.leftLessons != null">
+        left_lessons = #{record.leftLessons,jdbcType=INTEGER},
+      </if>
+      <if test="record.registrationNoTemplate != null">
+        registration_no_template = #{record.registrationNoTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.knowUs != null">
+        know_us = #{record.knowUs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update students_student
+    set id = #{record.id,jdbcType=INTEGER},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      fullname = #{record.fullname,jdbcType=VARCHAR},
+      ic = #{record.ic,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=INTEGER},
+      date_of_birth = #{record.dateOfBirth,jdbcType=DATE},
+      nationality = #{record.nationality,jdbcType=VARCHAR},
+      race = #{record.race,jdbcType=VARCHAR},
+      religion = #{record.religion,jdbcType=VARCHAR},
+      mother_tongue = #{record.motherTongue,jdbcType=VARCHAR},
+      language_spoken = #{record.languageSpoken,jdbcType=VARCHAR},
+      medical_record = #{record.medicalRecord,jdbcType=VARCHAR},
+      special_needs = #{record.specialNeeds,jdbcType=VARCHAR},
+      enter_date = #{record.enterDate,jdbcType=DATE},
+      leave_date = #{record.leaveDate,jdbcType=DATE},
+      home_address = #{record.homeAddress,jdbcType=VARCHAR},
+      emergency_contact_no = #{record.emergencyContactNo,jdbcType=VARCHAR},
+      student_care_type = #{record.studentCareType,jdbcType=INTEGER},
+      program_type = #{record.programType,jdbcType=INTEGER},
+      postal_code = #{record.postalCode,jdbcType=VARCHAR},
+      registration_no = #{record.registrationNo,jdbcType=VARCHAR},
+      rfid = #{record.rfid,jdbcType=VARCHAR},
+      unit_no = #{record.unitNo,jdbcType=VARCHAR},
+      emergency_contact = #{record.emergencyContact,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=INTEGER},
+      touch_able = #{record.touchAble,jdbcType=INTEGER},
+      birth_range = #{record.birthRange,jdbcType=INTEGER},
+      alternative_care_name = #{record.alternativeCareName,jdbcType=VARCHAR},
+      alternative_care_contact_no = #{record.alternativeCareContactNo,jdbcType=VARCHAR},
+      alternative_care_adress = #{record.alternativeCareAdress,jdbcType=VARCHAR},
+      alternative_care_relationship = #{record.alternativeCareRelationship,jdbcType=VARCHAR},
+      touch_password = #{record.touchPassword,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      enrichment_center_id = #{record.enrichmentCenterId,jdbcType=INTEGER},
+      date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
+      school = #{record.school,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=VARCHAR},
+      issued_by = #{record.issuedBy,jdbcType=VARCHAR},
+      total_lessons = #{record.totalLessons,jdbcType=INTEGER},
+      left_lessons = #{record.leftLessons,jdbcType=INTEGER},
+      registration_no_template = #{record.registrationNoTemplate,jdbcType=VARCHAR},
+      know_us = #{record.knowUs,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taidii.staffdevelopment.hq.entity.StudentsStudent">
+    update students_student
+    <set>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null">
+        fullname = #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="ic != null">
+        ic = #{ic,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="dateOfBirth != null">
+        date_of_birth = #{dateOfBirth,jdbcType=DATE},
+      </if>
+      <if test="nationality != null">
+        nationality = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="race != null">
+        race = #{race,jdbcType=VARCHAR},
+      </if>
+      <if test="religion != null">
+        religion = #{religion,jdbcType=VARCHAR},
+      </if>
+      <if test="motherTongue != null">
+        mother_tongue = #{motherTongue,jdbcType=VARCHAR},
+      </if>
+      <if test="languageSpoken != null">
+        language_spoken = #{languageSpoken,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalRecord != null">
+        medical_record = #{medicalRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="specialNeeds != null">
+        special_needs = #{specialNeeds,jdbcType=VARCHAR},
+      </if>
+      <if test="enterDate != null">
+        enter_date = #{enterDate,jdbcType=DATE},
+      </if>
+      <if test="leaveDate != null">
+        leave_date = #{leaveDate,jdbcType=DATE},
+      </if>
+      <if test="homeAddress != null">
+        home_address = #{homeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactNo != null">
+        emergency_contact_no = #{emergencyContactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCareType != null">
+        student_care_type = #{studentCareType,jdbcType=INTEGER},
+      </if>
+      <if test="programType != null">
+        program_type = #{programType,jdbcType=INTEGER},
+      </if>
+      <if test="postalCode != null">
+        postal_code = #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="registrationNo != null">
+        registration_no = #{registrationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rfid != null">
+        rfid = #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null">
+        unit_no = #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContact != null">
+        emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=INTEGER},
+      </if>
+      <if test="touchAble != null">
+        touch_able = #{touchAble,jdbcType=INTEGER},
+      </if>
+      <if test="birthRange != null">
+        birth_range = #{birthRange,jdbcType=INTEGER},
+      </if>
+      <if test="alternativeCareName != null">
+        alternative_care_name = #{alternativeCareName,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeCareContactNo != null">
+        alternative_care_contact_no = #{alternativeCareContactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeCareAdress != null">
+        alternative_care_adress = #{alternativeCareAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeCareRelationship != null">
+        alternative_care_relationship = #{alternativeCareRelationship,jdbcType=VARCHAR},
+      </if>
+      <if test="touchPassword != null">
+        touch_password = #{touchPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="enrichmentCenterId != null">
+        enrichment_center_id = #{enrichmentCenterId,jdbcType=INTEGER},
+      </if>
+      <if test="dateCreated != null">
+        date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedBy != null">
+        issued_by = #{issuedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="totalLessons != null">
+        total_lessons = #{totalLessons,jdbcType=INTEGER},
+      </if>
+      <if test="leftLessons != null">
+        left_lessons = #{leftLessons,jdbcType=INTEGER},
+      </if>
+      <if test="registrationNoTemplate != null">
+        registration_no_template = #{registrationNoTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="knowUs != null">
+        know_us = #{knowUs,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taidii.staffdevelopment.hq.entity.StudentsStudent">
+    update students_student
+    set avatar = #{avatar,jdbcType=VARCHAR},
+      fullname = #{fullname,jdbcType=VARCHAR},
+      ic = #{ic,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      date_of_birth = #{dateOfBirth,jdbcType=DATE},
+      nationality = #{nationality,jdbcType=VARCHAR},
+      race = #{race,jdbcType=VARCHAR},
+      religion = #{religion,jdbcType=VARCHAR},
+      mother_tongue = #{motherTongue,jdbcType=VARCHAR},
+      language_spoken = #{languageSpoken,jdbcType=VARCHAR},
+      medical_record = #{medicalRecord,jdbcType=VARCHAR},
+      special_needs = #{specialNeeds,jdbcType=VARCHAR},
+      enter_date = #{enterDate,jdbcType=DATE},
+      leave_date = #{leaveDate,jdbcType=DATE},
+      home_address = #{homeAddress,jdbcType=VARCHAR},
+      emergency_contact_no = #{emergencyContactNo,jdbcType=VARCHAR},
+      student_care_type = #{studentCareType,jdbcType=INTEGER},
+      program_type = #{programType,jdbcType=INTEGER},
+      postal_code = #{postalCode,jdbcType=VARCHAR},
+      registration_no = #{registrationNo,jdbcType=VARCHAR},
+      rfid = #{rfid,jdbcType=VARCHAR},
+      unit_no = #{unitNo,jdbcType=VARCHAR},
+      emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      country = #{country,jdbcType=INTEGER},
+      touch_able = #{touchAble,jdbcType=INTEGER},
+      birth_range = #{birthRange,jdbcType=INTEGER},
+      alternative_care_name = #{alternativeCareName,jdbcType=VARCHAR},
+      alternative_care_contact_no = #{alternativeCareContactNo,jdbcType=VARCHAR},
+      alternative_care_adress = #{alternativeCareAdress,jdbcType=VARCHAR},
+      alternative_care_relationship = #{alternativeCareRelationship,jdbcType=VARCHAR},
+      touch_password = #{touchPassword,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      enrichment_center_id = #{enrichmentCenterId,jdbcType=INTEGER},
+      date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      school = #{school,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      issued_by = #{issuedBy,jdbcType=VARCHAR},
+      total_lessons = #{totalLessons,jdbcType=INTEGER},
+      left_lessons = #{leftLessons,jdbcType=INTEGER},
+      registration_no_template = #{registrationNoTemplate,jdbcType=VARCHAR},
+      know_us = #{knowUs,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

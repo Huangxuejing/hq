@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.dao.mapper.custom.DevelopSelfEvaluationMapper2">
+  
+  	<!-- 获取员工自评年汇总 -->
+	<select id="getYearList" resultType="Integer">
+		SELECT DISTINCT
+			year
+		FROM
+			develop_self_evaluation
+		<where>
+			is_delete = #{isDelete}
+			<if test="userId != null">
+				AND user_id = #{userId}
+			</if>
+			<if test="schoolId != null">
+				AND school_id = #{schoolId}
+			</if>
+		</where>
+		ORDER BY year DESC
+	</select>
+	
+	<!-- 获取员工自评年汇总 -->
+	<select id="getLastPeriod" resultType="Integer">
+		SELECT 
+			period
+		FROM
+			develop_self_evaluation
+		<where>
+			is_delete = #{isDelete}
+			<if test="userId != null">
+				AND user_id = #{userId}
+			</if>
+			<if test="schoolId != null">
+				AND school_id = #{schoolId}
+			</if>
+		</where>
+		ORDER BY gmt_create DESC LIMIT 1
+	</select>
+	
+	<!-- 院长获取员工自评列表 -->
+	<select id="getList" resultType="com.taidii.staffdevelopment.dto.selfEvaluation.SelfEvaluationTeacherListDTO">
+		SELECT
+			dl.duty_id dutyId,
+			dl.id dutyLevelId,
+			dl. NAME dutyLevelName,
+			se.id,
+			se. STATUS,
+			CONCAT_WS(
+				' ',
+				au.first_name,
+				au.last_name
+			) teacherName,
+			CONCAT(
+				'http://7xj2zq.com5.z0.glb.qiniucdn.com/',
+				act.avatar
+			) url,
+			if(se.status > 4,se.status-3,se.status) st
+		FROM
+			develop_duty_level dl
+		LEFT JOIN (
+			SELECT
+				*
+			FROM
+				develop_self_evaluation
+			WHERE
+				is_delete = #{isDelete}
+			AND school_id = #{schoolId}
+			AND `year` = #{year}
+			AND period = #{period}
+		) se ON dl.id = se.duty_level_id
+		LEFT JOIN auth_user au ON se.user_id = au.id
+		LEFT JOIN accounts_teacher act ON act.user_id = se.user_id
+		WHERE dl.is_delete = #{isDelete}
+		ORDER BY dl.duty_id,st DESC
+	</select>
+
+	<!-- 自评汇总 -->
+	<select id="fetchSelfEvaluation" resultType="com.taidii.staffdevelopment.dto.development.DevelopDTO">
+		SELECT
+			YEAR,
+			 duty_level_name dutyName
+		FROM
+			develop_self_evaluation
+		where
+		  status in (${status})
+		  and user_id =#{userId}
+		  and is_delete = #{isDelete}
+		 order by id desc
+	</select>
+
+	<!-- 自评汇总 -->
+	<select id="fetchSelfEvaluationYearDetails" resultType="com.taidii.staffdevelopment.dto.development.YearEvaluationDTO">
+		SELECT
+			  self.id evaluationId,
+				self.period,
+				self.year,
+				self.status,
+			  (
+					select IFNULL(avg(skill.score),0)
+					from develop_self_evaluation_skill skill
+					where skill.self_evaluation_id = self.id
+			   ) score
+			  ,
+			  (
+						select count(1)
+						from develop_self_evaluation_plan plan
+						where plan.self_evaluation_id = self.id
+					 ) total,
+				 (
+						select count(1)
+						from develop_self_evaluation_plan plan
+						where plan.self_evaluation_id = self.id
+									and plan.status =1
+					 ) finishNum,
+				 self.gmt_modify lastModify
+		FROM
+				develop_self_evaluation  self
+		where
+			  self.status in (${status})
+		  and self.user_id =#{userId}
+		  and self.is_delete = #{isDelete}
+		order by self.id desc
+
+	</select>
+  
+</mapper>

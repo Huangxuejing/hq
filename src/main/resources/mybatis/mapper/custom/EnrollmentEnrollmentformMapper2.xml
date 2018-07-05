@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.custom.EnrollmentEnrollmentformMapper2">
+  <select id="getNowTotalStudent" parameterType="java.lang.Integer" resultType="Integer">
+    SELECT DISTINCT student_id
+    FROM `enrollment_enrollmentform` 
+    where `status`=2  
+    <if test="ids != null and ids.size()>0">
+			AND center_id in
+			<foreach item="id" index="index" collection="ids" open="("
+				separator="," close=")">
+				#{id}
+			</foreach>
+	</if>
+  </select>
+  
+  <select id="getNewEnrollStudent" parameterType="java.lang.Integer"  resultType="Integer">
+    SELECT count(DISTINCT student_id) 
+    FROM `enrollment_enrollmentform` 
+    where `status`=2  
+    <if test="ids != null and ids.size()>0">
+			AND center_id in
+			<foreach item="id" index="index" collection="ids" open="("
+				separator="," close=")">
+				#{id}
+			</foreach>
+	</if>
+  </select>
+  
+  <select id="getWithdrStudent" parameterType="java.lang.Integer"  resultType="Integer">
+    SELECT count(DISTINCT student_id) 
+    FROM `enrollment_enrollmentform` 
+    where `status`=3  
+    <if test="ids != null and ids.size()>0">
+			AND center_id in
+			<foreach item="id" index="index" collection="ids" open="("
+				separator="," close=")">
+				#{id}
+			</foreach>
+	</if>
+  </select>
+</mapper>

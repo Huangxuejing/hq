@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.dao.mapper.custom.DevelopSelfEvaluationPlanMapper2">
+  
+  <!-- 获取某个自评的计划 -->
+  <select id="getPlanDetail" resultType="com.taidii.staffdevelopment.dto.selfEvaluation.SelfEvaluationPlanDetailDTO" parameterType="Integer">
+	SELECT
+		sep.id id,
+		dls.id dutyLevelSkillId,
+		dls.name name,
+		sep.action_plan actionPlan,
+		sep.area_of_improvement areaOfImprovement,
+		sep.target_complete_date targetCompleteDate,
+		dls2.id parentId,
+		dls2.name parentName
+	FROM
+		develop_self_evaluation_plan sep,
+		develop_duty_level_skill dls,
+		develop_duty_level_skill dls2
+	WHERE
+	 dls.id = sep.duty_level_skill_id
+	AND dls.parent_id = dls2.id
+	AND sep.self_evaluation_id = #{selfEvaluationId}
+	AND dls.is_delete = #{isDelete}
+	AND sep.is_delete = #{isDelete}
+	AND dls2.is_delete = #{isDelete}
+  </select>
+
+	<!-- 通过用户id和职务id获取已完成计划总数 -->
+	<select id="getCompletePlanByMap" resultType="Long">
+		SELECT
+			count(*)
+		FROM
+			develop_self_evaluation se,
+			develop_self_evaluation_plan sep
+		WHERE
+			se.id = sep.self_evaluation_id
+		AND se.is_delete = #{isDelete}
+		AND sep.is_delete = #{isDelete}
+		AND se.user_id = #{userId}
+		AND sep.duty_level_skill_id = #{dutyLevelSkillId}
+		AND sep.status = #{status}
+	</select>
+
+</mapper>

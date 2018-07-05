@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.custom.EnrichmentKlassscheduletimeMapper2">
+	<insert id="insertEnrichmentKlassscheduletime" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentKlassscheduletime">
+		INSERT INTO enrichment_klassscheduletime (
+			klassschedule_id,
+			`repeat`,
+			start_time,
+			end_time
+		)
+		VALUES
+			(
+				#{klassscheduleId,jdbcType=INTEGER},
+				#{repeat,jdbcType=INTEGER},
+				#{startTime,jdbcType=TIME},
+				#{endTime,jdbcType=TIME}
+			)
+	</insert>
+    <select id="getRoomByClassId" resultType="java.lang.Integer">
+		select room_id from enrichment_klassscheduleday where klassschedule_id=#{id} limit 1
+	</select>
+</mapper>

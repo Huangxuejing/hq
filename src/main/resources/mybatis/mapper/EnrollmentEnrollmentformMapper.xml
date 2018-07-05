@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.EnrollmentEnrollmentformMapper">
+  <resultMap id="BaseResultMap" type="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentform">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="child_id" jdbcType="INTEGER" property="childId" />
+    <result column="center_id" jdbcType="INTEGER" property="centerId" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="talk_to_sales" jdbcType="BIT" property="talkToSales" />
+    <result column="admission_fee" jdbcType="INTEGER" property="admissionFee" />
+    <result column="preferred_visiting_date" jdbcType="DATE" property="preferredVisitingDate" />
+    <result column="preferred_commencement_date" jdbcType="DATE" property="preferredCommencementDate" />
+    <result column="registered_date" jdbcType="DATE" property="registeredDate" />
+    <result column="no_of_siblings" jdbcType="INTEGER" property="noOfSiblings" />
+    <result column="no_of_siblings_in_school" jdbcType="INTEGER" property="noOfSiblingsInSchool" />
+    <result column="is_enrolled_another_centre" jdbcType="BIT" property="isEnrolledAnotherCentre" />
+    <result column="full_half_day" jdbcType="INTEGER" property="fullHalfDay" />
+    <result column="program_id" jdbcType="INTEGER" property="programId" />
+    <result column="followup_by" jdbcType="VARCHAR" property="followupBy" />
+    <result column="withdrawal_type" jdbcType="INTEGER" property="withdrawalType" />
+    <result column="last_date_at_center" jdbcType="DATE" property="lastDateAtCenter" />
+    <result column="month_notice" jdbcType="BIT" property="monthNotice" />
+    <result column="deposit_returned" jdbcType="BIT" property="depositReturned" />
+    <result column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="invoice_id" jdbcType="INTEGER" property="invoiceId" />
+    <result column="sales_name" jdbcType="VARCHAR" property="salesName" />
+    <result column="get_information" jdbcType="BIT" property="getInformation" />
+    <result column="preferred_visiting_time" jdbcType="TIME" property="preferredVisitingTime" />
+    <result column="agree_rule" jdbcType="BIT" property="agreeRule" />
+    <result column="deposit" jdbcType="INTEGER" property="deposit" />
+    <result column="preference" jdbcType="INTEGER" property="preference" />
+    <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+    <result column="withdraw_reason" jdbcType="INTEGER" property="withdrawReason" />
+    <result column="mc_reference" jdbcType="VARCHAR" property="mcReference" />
+    <result column="sales_number" jdbcType="VARCHAR" property="salesNumber" />
+    <result column="sales_contact_number" jdbcType="VARCHAR" property="salesContactNumber" />
+    <result column="preference_type" jdbcType="VARCHAR" property="preferenceType" />
+    <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
+    <result column="food_allergies" jdbcType="VARCHAR" property="foodAllergies" />
+    <result column="medical_conditions" jdbcType="VARCHAR" property="medicalConditions" />
+    <result column="learning_differences" jdbcType="VARCHAR" property="learningDifferences" />
+    <result column="last_edit_time" jdbcType="TIMESTAMP" property="lastEditTime" />
+    <result column="enquiry_date" jdbcType="DATE" property="enquiryDate" />
+    <result column="source_other" jdbcType="VARCHAR" property="sourceOther" />
+    <result column="convert_date" jdbcType="DATE" property="convertDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentformWithBLOBs">
+    <result column="remarks" jdbcType="LONGVARCHAR" property="remarks" />
+    <result column="simple_content" jdbcType="LONGVARCHAR" property="simpleContent" />
+    <result column="inspection_data" jdbcType="LONGVARCHAR" property="inspectionData" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, child_id, center_id, start_date, status, source, type, priority, talk_to_sales, 
+    admission_fee, preferred_visiting_date, preferred_commencement_date, registered_date, 
+    no_of_siblings, no_of_siblings_in_school, is_enrolled_another_centre, full_half_day, 
+    program_id, followup_by, withdrawal_type, last_date_at_center, month_notice, deposit_returned, 
+    student_id, invoice_id, sales_name, get_information, preferred_visiting_time, agree_rule, 
+    deposit, preference, student_no, withdraw_reason, mc_reference, sales_number, sales_contact_number, 
+    preference_type, source_type, food_allergies, medical_conditions, learning_differences, 
+    last_edit_time, enquiry_date, source_other, convert_date
+  </sql>
+  <sql id="Blob_Column_List">
+    remarks, simple_content, inspection_data
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentformExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from enrollment_enrollmentform
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentformExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enrollment_enrollmentform
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from enrollment_enrollmentform
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enrollment_enrollmentform
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentformExample">
+    delete from enrollment_enrollmentform
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentformWithBLOBs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enrollment_enrollmentform (child_id, center_id, start_date, 
+      status, source, type, 
+      priority, talk_to_sales, admission_fee, 
+      preferred_visiting_date, preferred_commencement_date, 
+      registered_date, no_of_siblings, no_of_siblings_in_school, 
+      is_enrolled_another_centre, full_half_day, program_id, 
+      followup_by, withdrawal_type, last_date_at_center, 
+      month_notice, deposit_returned, student_id, 
+      invoice_id, sales_name, get_information, 
+      preferred_visiting_time, agree_rule, deposit, 
+      preference, student_no, withdraw_reason, 
+      mc_reference, sales_number, sales_contact_number, 
+      preference_type, source_type, food_allergies, 
+      medical_conditions, learning_differences, 
+      last_edit_time, enquiry_date, source_other, 
+      convert_date, remarks, simple_content, 
+      inspection_data)
+    values (#{childId,jdbcType=INTEGER}, #{centerId,jdbcType=INTEGER}, #{startDate,jdbcType=DATE}, 
+      #{status,jdbcType=INTEGER}, #{source,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{priority,jdbcType=INTEGER}, #{talkToSales,jdbcType=BIT}, #{admissionFee,jdbcType=INTEGER}, 
+      #{preferredVisitingDate,jdbcType=DATE}, #{preferredCommencementDate,jdbcType=DATE}, 
+      #{registeredDate,jdbcType=DATE}, #{noOfSiblings,jdbcType=INTEGER}, #{noOfSiblingsInSchool,jdbcType=INTEGER}, 
+      #{isEnrolledAnotherCentre,jdbcType=BIT}, #{fullHalfDay,jdbcType=INTEGER}, #{programId,jdbcType=INTEGER}, 
+      #{followupBy,jdbcType=VARCHAR}, #{withdrawalType,jdbcType=INTEGER}, #{lastDateAtCenter,jdbcType=DATE}, 
+      #{monthNotice,jdbcType=BIT}, #{depositReturned,jdbcType=BIT}, #{studentId,jdbcType=INTEGER}, 
+      #{invoiceId,jdbcType=INTEGER}, #{salesName,jdbcType=VARCHAR}, #{getInformation,jdbcType=BIT}, 
+      #{preferredVisitingTime,jdbcType=TIME}, #{agreeRule,jdbcType=BIT}, #{deposit,jdbcType=INTEGER}, 
+      #{preference,jdbcType=INTEGER}, #{studentNo,jdbcType=VARCHAR}, #{withdrawReason,jdbcType=INTEGER}, 
+      #{mcReference,jdbcType=VARCHAR}, #{salesNumber,jdbcType=VARCHAR}, #{salesContactNumber,jdbcType=VARCHAR}, 
+      #{preferenceType,jdbcType=VARCHAR}, #{sourceType,jdbcType=VARCHAR}, #{foodAllergies,jdbcType=VARCHAR}, 
+      #{medicalConditions,jdbcType=VARCHAR}, #{learningDifferences,jdbcType=VARCHAR}, 
+      #{lastEditTime,jdbcType=TIMESTAMP}, #{enquiryDate,jdbcType=DATE}, #{sourceOther,jdbcType=VARCHAR}, 
+      #{convertDate,jdbcType=DATE}, #{remarks,jdbcType=LONGVARCHAR}, #{simpleContent,jdbcType=LONGVARCHAR}, 
+      #{inspectionData,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentformWithBLOBs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enrollment_enrollmentform
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="childId != null">
+        child_id,
+      </if>
+      <if test="centerId != null">
+        center_id,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="talkToSales != null">
+        talk_to_sales,
+      </if>
+      <if test="admissionFee != null">
+        admission_fee,
+      </if>
+      <if test="preferredVisitingDate != null">
+        preferred_visiting_date,
+      </if>
+      <if test="preferredCommencementDate != null">
+        preferred_commencement_date,
+      </if>
+      <if test="registeredDate != null">
+        registered_date,
+      </if>
+      <if test="noOfSiblings != null">
+        no_of_siblings,
+      </if>
+      <if test="noOfSiblingsInSchool != null">
+        no_of_siblings_in_school,
+      </if>
+      <if test="isEnrolledAnotherCentre != null">
+        is_enrolled_another_centre,
+      </if>
+      <if test="fullHalfDay != null">
+        full_half_day,
+      </if>
+      <if test="programId != null">
+        program_id,
+      </if>
+      <if test="followupBy != null">
+        followup_by,
+      </if>
+      <if test="withdrawalType != null">
+        withdrawal_type,
+      </if>
+      <if test="lastDateAtCenter != null">
+        last_date_at_center,
+      </if>
+      <if test="monthNotice != null">
+        month_notice,
+      </if>
+      <if test="depositReturned != null">
+        deposit_returned,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="invoiceId != null">
+        invoice_id,
+      </if>
+      <if test="salesName != null">
+        sales_name,
+      </if>
+      <if test="getInformation != null">
+        get_information,
+      </if>
+      <if test="preferredVisitingTime != null">
+        preferred_visiting_time,
+      </if>
+      <if test="agreeRule != null">
+        agree_rule,
+      </if>
+      <if test="deposit != null">
+        deposit,
+      </if>
+      <if test="preference != null">
+        preference,
+      </if>
+      <if test="studentNo != null">
+        student_no,
+      </if>
+      <if test="withdrawReason != null">
+        withdraw_reason,
+      </if>
+      <if test="mcReference != null">
+        mc_reference,
+      </if>
+      <if test="salesNumber != null">
+        sales_number,
+      </if>
+      <if test="salesContactNumber != null">
+        sales_contact_number,
+      </if>
+      <if test="preferenceType != null">
+        preference_type,
+      </if>
+      <if test="sourceType != null">
+        source_type,
+      </if>
+      <if test="foodAllergies != null">
+        food_allergies,
+      </if>
+      <if test="medicalConditions != null">
+        medical_conditions,
+      </if>
+      <if test="learningDifferences != null">
+        learning_differences,
+      </if>
+      <if test="lastEditTime != null">
+        last_edit_time,
+      </if>
+      <if test="enquiryDate != null">
+        enquiry_date,
+      </if>
+      <if test="sourceOther != null">
+        source_other,
+      </if>
+      <if test="convertDate != null">
+        convert_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="simpleContent != null">
+        simple_content,
+      </if>
+      <if test="inspectionData != null">
+        inspection_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="childId != null">
+        #{childId,jdbcType=INTEGER},
+      </if>
+      <if test="centerId != null">
+        #{centerId,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="talkToSales != null">
+        #{talkToSales,jdbcType=BIT},
+      </if>
+      <if test="admissionFee != null">
+        #{admissionFee,jdbcType=INTEGER},
+      </if>
+      <if test="preferredVisitingDate != null">
+        #{preferredVisitingDate,jdbcType=DATE},
+      </if>
+      <if test="preferredCommencementDate != null">
+        #{preferredCommencementDate,jdbcType=DATE},
+      </if>
+      <if test="registeredDate != null">
+        #{registeredDate,jdbcType=DATE},
+      </if>
+      <if test="noOfSiblings != null">
+        #{noOfSiblings,jdbcType=INTEGER},
+      </if>
+      <if test="noOfSiblingsInSchool != null">
+        #{noOfSiblingsInSchool,jdbcType=INTEGER},
+      </if>
+      <if test="isEnrolledAnotherCentre != null">
+        #{isEnrolledAnotherCentre,jdbcType=BIT},
+      </if>
+      <if test="fullHalfDay != null">
+        #{fullHalfDay,jdbcType=INTEGER},
+      </if>
+      <if test="programId != null">
+        #{programId,jdbcType=INTEGER},
+      </if>
+      <if test="followupBy != null">
+        #{followupBy,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawalType != null">
+        #{withdrawalType,jdbcType=INTEGER},
+      </if>
+      <if test="lastDateAtCenter != null">
+        #{lastDateAtCenter,jdbcType=DATE},
+      </if>
+      <if test="monthNotice != null">
+        #{monthNotice,jdbcType=BIT},
+      </if>
+      <if test="depositReturned != null">
+        #{depositReturned,jdbcType=BIT},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceId != null">
+        #{invoiceId,jdbcType=INTEGER},
+      </if>
+      <if test="salesName != null">
+        #{salesName,jdbcType=VARCHAR},
+      </if>
+      <if test="getInformation != null">
+        #{getInformation,jdbcType=BIT},
+      </if>
+      <if test="preferredVisitingTime != null">
+        #{preferredVisitingTime,jdbcType=TIME},
+      </if>
+      <if test="agreeRule != null">
+        #{agreeRule,jdbcType=BIT},
+      </if>
+      <if test="deposit != null">
+        #{deposit,jdbcType=INTEGER},
+      </if>
+      <if test="preference != null">
+        #{preference,jdbcType=INTEGER},
+      </if>
+      <if test="studentNo != null">
+        #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawReason != null">
+        #{withdrawReason,jdbcType=INTEGER},
+      </if>
+      <if test="mcReference != null">
+        #{mcReference,jdbcType=VARCHAR},
+      </if>
+      <if test="salesNumber != null">
+        #{salesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="salesContactNumber != null">
+        #{salesContactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="preferenceType != null">
+        #{preferenceType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="foodAllergies != null">
+        #{foodAllergies,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalConditions != null">
+        #{medicalConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="learningDifferences != null">
+        #{learningDifferences,jdbcType=VARCHAR},
+      </if>
+      <if test="lastEditTime != null">
+        #{lastEditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enquiryDate != null">
+        #{enquiryDate,jdbcType=DATE},
+      </if>
+      <if test="sourceOther != null">
+        #{sourceOther,jdbcType=VARCHAR},
+      </if>
+      <if test="convertDate != null">
+        #{convertDate,jdbcType=DATE},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="simpleContent != null">
+        #{simpleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="inspectionData != null">
+        #{inspectionData,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentformExample" resultType="java.lang.Long">
+    select count(*) from enrollment_enrollmentform
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enrollment_enrollmentform
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.childId != null">
+        child_id = #{record.childId,jdbcType=INTEGER},
+      </if>
+      <if test="record.centerId != null">
+        center_id = #{record.centerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.startDate != null">
+        start_date = #{record.startDate,jdbcType=DATE},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.source != null">
+        source = #{record.source,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.priority != null">
+        priority = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.talkToSales != null">
+        talk_to_sales = #{record.talkToSales,jdbcType=BIT},
+      </if>
+      <if test="record.admissionFee != null">
+        admission_fee = #{record.admissionFee,jdbcType=INTEGER},
+      </if>
+      <if test="record.preferredVisitingDate != null">
+        preferred_visiting_date = #{record.preferredVisitingDate,jdbcType=DATE},
+      </if>
+      <if test="record.preferredCommencementDate != null">
+        preferred_commencement_date = #{record.preferredCommencementDate,jdbcType=DATE},
+      </if>
+      <if test="record.registeredDate != null">
+        registered_date = #{record.registeredDate,jdbcType=DATE},
+      </if>
+      <if test="record.noOfSiblings != null">
+        no_of_siblings = #{record.noOfSiblings,jdbcType=INTEGER},
+      </if>
+      <if test="record.noOfSiblingsInSchool != null">
+        no_of_siblings_in_school = #{record.noOfSiblingsInSchool,jdbcType=INTEGER},
+      </if>
+      <if test="record.isEnrolledAnotherCentre != null">
+        is_enrolled_another_centre = #{record.isEnrolledAnotherCentre,jdbcType=BIT},
+      </if>
+      <if test="record.fullHalfDay != null">
+        full_half_day = #{record.fullHalfDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.programId != null">
+        program_id = #{record.programId,jdbcType=INTEGER},
+      </if>
+      <if test="record.followupBy != null">
+        followup_by = #{record.followupBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.withdrawalType != null">
+        withdrawal_type = #{record.withdrawalType,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastDateAtCenter != null">
+        last_date_at_center = #{record.lastDateAtCenter,jdbcType=DATE},
+      </if>
+      <if test="record.monthNotice != null">
+        month_notice = #{record.monthNotice,jdbcType=BIT},
+      </if>
+      <if test="record.depositReturned != null">
+        deposit_returned = #{record.depositReturned,jdbcType=BIT},
+      </if>
+      <if test="record.studentId != null">
+        student_id = #{record.studentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceId != null">
+        invoice_id = #{record.invoiceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesName != null">
+        sales_name = #{record.salesName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.getInformation != null">
+        get_information = #{record.getInformation,jdbcType=BIT},
+      </if>
+      <if test="record.preferredVisitingTime != null">
+        preferred_visiting_time = #{record.preferredVisitingTime,jdbcType=TIME},
+      </if>
+      <if test="record.agreeRule != null">
+        agree_rule = #{record.agreeRule,jdbcType=BIT},
+      </if>
+      <if test="record.deposit != null">
+        deposit = #{record.deposit,jdbcType=INTEGER},
+      </if>
+      <if test="record.preference != null">
+        preference = #{record.preference,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentNo != null">
+        student_no = #{record.studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.withdrawReason != null">
+        withdraw_reason = #{record.withdrawReason,jdbcType=INTEGER},
+      </if>
+      <if test="record.mcReference != null">
+        mc_reference = #{record.mcReference,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesNumber != null">
+        sales_number = #{record.salesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesContactNumber != null">
+        sales_contact_number = #{record.salesContactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preferenceType != null">
+        preference_type = #{record.preferenceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceType != null">
+        source_type = #{record.sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodAllergies != null">
+        food_allergies = #{record.foodAllergies,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicalConditions != null">
+        medical_conditions = #{record.medicalConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.learningDifferences != null">
+        learning_differences = #{record.learningDifferences,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastEditTime != null">
+        last_edit_time = #{record.lastEditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enquiryDate != null">
+        enquiry_date = #{record.enquiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.sourceOther != null">
+        source_other = #{record.sourceOther,jdbcType=VARCHAR},
+      </if>
+      <if test="record.convertDate != null">
+        convert_date = #{record.convertDate,jdbcType=DATE},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.simpleContent != null">
+        simple_content = #{record.simpleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.inspectionData != null">
+        inspection_data = #{record.inspectionData,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update enrollment_enrollmentform
+    set id = #{record.id,jdbcType=INTEGER},
+      child_id = #{record.childId,jdbcType=INTEGER},
+      center_id = #{record.centerId,jdbcType=INTEGER},
+      start_date = #{record.startDate,jdbcType=DATE},
+      status = #{record.status,jdbcType=INTEGER},
+      source = #{record.source,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      priority = #{record.priority,jdbcType=INTEGER},
+      talk_to_sales = #{record.talkToSales,jdbcType=BIT},
+      admission_fee = #{record.admissionFee,jdbcType=INTEGER},
+      preferred_visiting_date = #{record.preferredVisitingDate,jdbcType=DATE},
+      preferred_commencement_date = #{record.preferredCommencementDate,jdbcType=DATE},
+      registered_date = #{record.registeredDate,jdbcType=DATE},
+      no_of_siblings = #{record.noOfSiblings,jdbcType=INTEGER},
+      no_of_siblings_in_school = #{record.noOfSiblingsInSchool,jdbcType=INTEGER},
+      is_enrolled_another_centre = #{record.isEnrolledAnotherCentre,jdbcType=BIT},
+      full_half_day = #{record.fullHalfDay,jdbcType=INTEGER},
+      program_id = #{record.programId,jdbcType=INTEGER},
+      followup_by = #{record.followupBy,jdbcType=VARCHAR},
+      withdrawal_type = #{record.withdrawalType,jdbcType=INTEGER},
+      last_date_at_center = #{record.lastDateAtCenter,jdbcType=DATE},
+      month_notice = #{record.monthNotice,jdbcType=BIT},
+      deposit_returned = #{record.depositReturned,jdbcType=BIT},
+      student_id = #{record.studentId,jdbcType=INTEGER},
+      invoice_id = #{record.invoiceId,jdbcType=INTEGER},
+      sales_name = #{record.salesName,jdbcType=VARCHAR},
+      get_information = #{record.getInformation,jdbcType=BIT},
+      preferred_visiting_time = #{record.preferredVisitingTime,jdbcType=TIME},
+      agree_rule = #{record.agreeRule,jdbcType=BIT},
+      deposit = #{record.deposit,jdbcType=INTEGER},
+      preference = #{record.preference,jdbcType=INTEGER},
+      student_no = #{record.studentNo,jdbcType=VARCHAR},
+      withdraw_reason = #{record.withdrawReason,jdbcType=INTEGER},
+      mc_reference = #{record.mcReference,jdbcType=VARCHAR},
+      sales_number = #{record.salesNumber,jdbcType=VARCHAR},
+      sales_contact_number = #{record.salesContactNumber,jdbcType=VARCHAR},
+      preference_type = #{record.preferenceType,jdbcType=VARCHAR},
+      source_type = #{record.sourceType,jdbcType=VARCHAR},
+      food_allergies = #{record.foodAllergies,jdbcType=VARCHAR},
+      medical_conditions = #{record.medicalConditions,jdbcType=VARCHAR},
+      learning_differences = #{record.learningDifferences,jdbcType=VARCHAR},
+      last_edit_time = #{record.lastEditTime,jdbcType=TIMESTAMP},
+      enquiry_date = #{record.enquiryDate,jdbcType=DATE},
+      source_other = #{record.sourceOther,jdbcType=VARCHAR},
+      convert_date = #{record.convertDate,jdbcType=DATE},
+      remarks = #{record.remarks,jdbcType=LONGVARCHAR},
+      simple_content = #{record.simpleContent,jdbcType=LONGVARCHAR},
+      inspection_data = #{record.inspectionData,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enrollment_enrollmentform
+    set id = #{record.id,jdbcType=INTEGER},
+      child_id = #{record.childId,jdbcType=INTEGER},
+      center_id = #{record.centerId,jdbcType=INTEGER},
+      start_date = #{record.startDate,jdbcType=DATE},
+      status = #{record.status,jdbcType=INTEGER},
+      source = #{record.source,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      priority = #{record.priority,jdbcType=INTEGER},
+      talk_to_sales = #{record.talkToSales,jdbcType=BIT},
+      admission_fee = #{record.admissionFee,jdbcType=INTEGER},
+      preferred_visiting_date = #{record.preferredVisitingDate,jdbcType=DATE},
+      preferred_commencement_date = #{record.preferredCommencementDate,jdbcType=DATE},
+      registered_date = #{record.registeredDate,jdbcType=DATE},
+      no_of_siblings = #{record.noOfSiblings,jdbcType=INTEGER},
+      no_of_siblings_in_school = #{record.noOfSiblingsInSchool,jdbcType=INTEGER},
+      is_enrolled_another_centre = #{record.isEnrolledAnotherCentre,jdbcType=BIT},
+      full_half_day = #{record.fullHalfDay,jdbcType=INTEGER},
+      program_id = #{record.programId,jdbcType=INTEGER},
+      followup_by = #{record.followupBy,jdbcType=VARCHAR},
+      withdrawal_type = #{record.withdrawalType,jdbcType=INTEGER},
+      last_date_at_center = #{record.lastDateAtCenter,jdbcType=DATE},
+      month_notice = #{record.monthNotice,jdbcType=BIT},
+      deposit_returned = #{record.depositReturned,jdbcType=BIT},
+      student_id = #{record.studentId,jdbcType=INTEGER},
+      invoice_id = #{record.invoiceId,jdbcType=INTEGER},
+      sales_name = #{record.salesName,jdbcType=VARCHAR},
+      get_information = #{record.getInformation,jdbcType=BIT},
+      preferred_visiting_time = #{record.preferredVisitingTime,jdbcType=TIME},
+      agree_rule = #{record.agreeRule,jdbcType=BIT},
+      deposit = #{record.deposit,jdbcType=INTEGER},
+      preference = #{record.preference,jdbcType=INTEGER},
+      student_no = #{record.studentNo,jdbcType=VARCHAR},
+      withdraw_reason = #{record.withdrawReason,jdbcType=INTEGER},
+      mc_reference = #{record.mcReference,jdbcType=VARCHAR},
+      sales_number = #{record.salesNumber,jdbcType=VARCHAR},
+      sales_contact_number = #{record.salesContactNumber,jdbcType=VARCHAR},
+      preference_type = #{record.preferenceType,jdbcType=VARCHAR},
+      source_type = #{record.sourceType,jdbcType=VARCHAR},
+      food_allergies = #{record.foodAllergies,jdbcType=VARCHAR},
+      medical_conditions = #{record.medicalConditions,jdbcType=VARCHAR},
+      learning_differences = #{record.learningDifferences,jdbcType=VARCHAR},
+      last_edit_time = #{record.lastEditTime,jdbcType=TIMESTAMP},
+      enquiry_date = #{record.enquiryDate,jdbcType=DATE},
+      source_other = #{record.sourceOther,jdbcType=VARCHAR},
+      convert_date = #{record.convertDate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentformWithBLOBs">
+    update enrollment_enrollmentform
+    <set>
+      <if test="childId != null">
+        child_id = #{childId,jdbcType=INTEGER},
+      </if>
+      <if test="centerId != null">
+        center_id = #{centerId,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="talkToSales != null">
+        talk_to_sales = #{talkToSales,jdbcType=BIT},
+      </if>
+      <if test="admissionFee != null">
+        admission_fee = #{admissionFee,jdbcType=INTEGER},
+      </if>
+      <if test="preferredVisitingDate != null">
+        preferred_visiting_date = #{preferredVisitingDate,jdbcType=DATE},
+      </if>
+      <if test="preferredCommencementDate != null">
+        preferred_commencement_date = #{preferredCommencementDate,jdbcType=DATE},
+      </if>
+      <if test="registeredDate != null">
+        registered_date = #{registeredDate,jdbcType=DATE},
+      </if>
+      <if test="noOfSiblings != null">
+        no_of_siblings = #{noOfSiblings,jdbcType=INTEGER},
+      </if>
+      <if test="noOfSiblingsInSchool != null">
+        no_of_siblings_in_school = #{noOfSiblingsInSchool,jdbcType=INTEGER},
+      </if>
+      <if test="isEnrolledAnotherCentre != null">
+        is_enrolled_another_centre = #{isEnrolledAnotherCentre,jdbcType=BIT},
+      </if>
+      <if test="fullHalfDay != null">
+        full_half_day = #{fullHalfDay,jdbcType=INTEGER},
+      </if>
+      <if test="programId != null">
+        program_id = #{programId,jdbcType=INTEGER},
+      </if>
+      <if test="followupBy != null">
+        followup_by = #{followupBy,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawalType != null">
+        withdrawal_type = #{withdrawalType,jdbcType=INTEGER},
+      </if>
+      <if test="lastDateAtCenter != null">
+        last_date_at_center = #{lastDateAtCenter,jdbcType=DATE},
+      </if>
+      <if test="monthNotice != null">
+        month_notice = #{monthNotice,jdbcType=BIT},
+      </if>
+      <if test="depositReturned != null">
+        deposit_returned = #{depositReturned,jdbcType=BIT},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceId != null">
+        invoice_id = #{invoiceId,jdbcType=INTEGER},
+      </if>
+      <if test="salesName != null">
+        sales_name = #{salesName,jdbcType=VARCHAR},
+      </if>
+      <if test="getInformation != null">
+        get_information = #{getInformation,jdbcType=BIT},
+      </if>
+      <if test="preferredVisitingTime != null">
+        preferred_visiting_time = #{preferredVisitingTime,jdbcType=TIME},
+      </if>
+      <if test="agreeRule != null">
+        agree_rule = #{agreeRule,jdbcType=BIT},
+      </if>
+      <if test="deposit != null">
+        deposit = #{deposit,jdbcType=INTEGER},
+      </if>
+      <if test="preference != null">
+        preference = #{preference,jdbcType=INTEGER},
+      </if>
+      <if test="studentNo != null">
+        student_no = #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawReason != null">
+        withdraw_reason = #{withdrawReason,jdbcType=INTEGER},
+      </if>
+      <if test="mcReference != null">
+        mc_reference = #{mcReference,jdbcType=VARCHAR},
+      </if>
+      <if test="salesNumber != null">
+        sales_number = #{salesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="salesContactNumber != null">
+        sales_contact_number = #{salesContactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="preferenceType != null">
+        preference_type = #{preferenceType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        source_type = #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="foodAllergies != null">
+        food_allergies = #{foodAllergies,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalConditions != null">
+        medical_conditions = #{medicalConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="learningDifferences != null">
+        learning_differences = #{learningDifferences,jdbcType=VARCHAR},
+      </if>
+      <if test="lastEditTime != null">
+        last_edit_time = #{lastEditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enquiryDate != null">
+        enquiry_date = #{enquiryDate,jdbcType=DATE},
+      </if>
+      <if test="sourceOther != null">
+        source_other = #{sourceOther,jdbcType=VARCHAR},
+      </if>
+      <if test="convertDate != null">
+        convert_date = #{convertDate,jdbcType=DATE},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="simpleContent != null">
+        simple_content = #{simpleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="inspectionData != null">
+        inspection_data = #{inspectionData,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentformWithBLOBs">
+    update enrollment_enrollmentform
+    set child_id = #{childId,jdbcType=INTEGER},
+      center_id = #{centerId,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=DATE},
+      status = #{status,jdbcType=INTEGER},
+      source = #{source,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      priority = #{priority,jdbcType=INTEGER},
+      talk_to_sales = #{talkToSales,jdbcType=BIT},
+      admission_fee = #{admissionFee,jdbcType=INTEGER},
+      preferred_visiting_date = #{preferredVisitingDate,jdbcType=DATE},
+      preferred_commencement_date = #{preferredCommencementDate,jdbcType=DATE},
+      registered_date = #{registeredDate,jdbcType=DATE},
+      no_of_siblings = #{noOfSiblings,jdbcType=INTEGER},
+      no_of_siblings_in_school = #{noOfSiblingsInSchool,jdbcType=INTEGER},
+      is_enrolled_another_centre = #{isEnrolledAnotherCentre,jdbcType=BIT},
+      full_half_day = #{fullHalfDay,jdbcType=INTEGER},
+      program_id = #{programId,jdbcType=INTEGER},
+      followup_by = #{followupBy,jdbcType=VARCHAR},
+      withdrawal_type = #{withdrawalType,jdbcType=INTEGER},
+      last_date_at_center = #{lastDateAtCenter,jdbcType=DATE},
+      month_notice = #{monthNotice,jdbcType=BIT},
+      deposit_returned = #{depositReturned,jdbcType=BIT},
+      student_id = #{studentId,jdbcType=INTEGER},
+      invoice_id = #{invoiceId,jdbcType=INTEGER},
+      sales_name = #{salesName,jdbcType=VARCHAR},
+      get_information = #{getInformation,jdbcType=BIT},
+      preferred_visiting_time = #{preferredVisitingTime,jdbcType=TIME},
+      agree_rule = #{agreeRule,jdbcType=BIT},
+      deposit = #{deposit,jdbcType=INTEGER},
+      preference = #{preference,jdbcType=INTEGER},
+      student_no = #{studentNo,jdbcType=VARCHAR},
+      withdraw_reason = #{withdrawReason,jdbcType=INTEGER},
+      mc_reference = #{mcReference,jdbcType=VARCHAR},
+      sales_number = #{salesNumber,jdbcType=VARCHAR},
+      sales_contact_number = #{salesContactNumber,jdbcType=VARCHAR},
+      preference_type = #{preferenceType,jdbcType=VARCHAR},
+      source_type = #{sourceType,jdbcType=VARCHAR},
+      food_allergies = #{foodAllergies,jdbcType=VARCHAR},
+      medical_conditions = #{medicalConditions,jdbcType=VARCHAR},
+      learning_differences = #{learningDifferences,jdbcType=VARCHAR},
+      last_edit_time = #{lastEditTime,jdbcType=TIMESTAMP},
+      enquiry_date = #{enquiryDate,jdbcType=DATE},
+      source_other = #{sourceOther,jdbcType=VARCHAR},
+      convert_date = #{convertDate,jdbcType=DATE},
+      remarks = #{remarks,jdbcType=LONGVARCHAR},
+      simple_content = #{simpleContent,jdbcType=LONGVARCHAR},
+      inspection_data = #{inspectionData,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taidii.staffdevelopment.hq.entity.EnrollmentEnrollmentform">
+    update enrollment_enrollmentform
+    set child_id = #{childId,jdbcType=INTEGER},
+      center_id = #{centerId,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=DATE},
+      status = #{status,jdbcType=INTEGER},
+      source = #{source,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      priority = #{priority,jdbcType=INTEGER},
+      talk_to_sales = #{talkToSales,jdbcType=BIT},
+      admission_fee = #{admissionFee,jdbcType=INTEGER},
+      preferred_visiting_date = #{preferredVisitingDate,jdbcType=DATE},
+      preferred_commencement_date = #{preferredCommencementDate,jdbcType=DATE},
+      registered_date = #{registeredDate,jdbcType=DATE},
+      no_of_siblings = #{noOfSiblings,jdbcType=INTEGER},
+      no_of_siblings_in_school = #{noOfSiblingsInSchool,jdbcType=INTEGER},
+      is_enrolled_another_centre = #{isEnrolledAnotherCentre,jdbcType=BIT},
+      full_half_day = #{fullHalfDay,jdbcType=INTEGER},
+      program_id = #{programId,jdbcType=INTEGER},
+      followup_by = #{followupBy,jdbcType=VARCHAR},
+      withdrawal_type = #{withdrawalType,jdbcType=INTEGER},
+      last_date_at_center = #{lastDateAtCenter,jdbcType=DATE},
+      month_notice = #{monthNotice,jdbcType=BIT},
+      deposit_returned = #{depositReturned,jdbcType=BIT},
+      student_id = #{studentId,jdbcType=INTEGER},
+      invoice_id = #{invoiceId,jdbcType=INTEGER},
+      sales_name = #{salesName,jdbcType=VARCHAR},
+      get_information = #{getInformation,jdbcType=BIT},
+      preferred_visiting_time = #{preferredVisitingTime,jdbcType=TIME},
+      agree_rule = #{agreeRule,jdbcType=BIT},
+      deposit = #{deposit,jdbcType=INTEGER},
+      preference = #{preference,jdbcType=INTEGER},
+      student_no = #{studentNo,jdbcType=VARCHAR},
+      withdraw_reason = #{withdrawReason,jdbcType=INTEGER},
+      mc_reference = #{mcReference,jdbcType=VARCHAR},
+      sales_number = #{salesNumber,jdbcType=VARCHAR},
+      sales_contact_number = #{salesContactNumber,jdbcType=VARCHAR},
+      preference_type = #{preferenceType,jdbcType=VARCHAR},
+      source_type = #{sourceType,jdbcType=VARCHAR},
+      food_allergies = #{foodAllergies,jdbcType=VARCHAR},
+      medical_conditions = #{medicalConditions,jdbcType=VARCHAR},
+      learning_differences = #{learningDifferences,jdbcType=VARCHAR},
+      last_edit_time = #{lastEditTime,jdbcType=TIMESTAMP},
+      enquiry_date = #{enquiryDate,jdbcType=DATE},
+      source_other = #{sourceOther,jdbcType=VARCHAR},
+      convert_date = #{convertDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

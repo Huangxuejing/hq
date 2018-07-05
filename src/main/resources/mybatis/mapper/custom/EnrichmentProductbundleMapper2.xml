@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.custom.EnrichmentProductbundleMapper2">
+    <resultMap id="ProductBundleDto" type="com.taidii.staffdevelopment.hq.dto.ProductBundleDto">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="charging_item" jdbcType="INTEGER" property="chargingItem" />
+        <result column="amount_before" jdbcType="INTEGER" property="amountBefore" />
+        <result column="amount_after" jdbcType="INTEGER" property="amountAfter" />
+        <result column="item_code" jdbcType="INTEGER" property="itemCode" />
+        <result column="remarks" jdbcType="INTEGER" property="remarks" />
+        <collection property="courseLevelDtos" resultMap="courseLevelDtos"></collection>
+    </resultMap>
+    <resultMap id="courseLevelDtos" type="com.taidii.staffdevelopment.hq.dto.CourseLevelDto">
+        <result column="course_id" jdbcType="INTEGER" property="courseId" />
+        <result column="name" jdbcType="INTEGER" property="courseName" />
+        <collection property="levelDtos" resultMap="LevelDto"></collection>
+    </resultMap>
+    <resultMap id="LevelDto" type="com.taidii.staffdevelopment.hq.dto.LevelDto">
+        <result column="id1" jdbcType="INTEGER" property="id" />
+        <result column="name1" jdbcType="INTEGER" property="name" />
+    </resultMap>
+  <insert id="saveProductBundleCourse">
+    insert into enrichment_productbundlecourse(producebundle_id,course_id,level_id,flag)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.producebundleId},#{item.courseId},#{item.levelId},#{item.flag})
+    </foreach>
+  </insert>
+  <update id="updateProductBundleCourseFlag">
+    update enrichment_productbundlecourse SET flag=1 WHERE flag=0 and producebundle_id=#{productbundleId}
+  </update>
+  <select id="getProductBundle" resultMap="ProductBundleDto">
+      SELECT DISTINCT a.id,a.charging_item,a.amount_before,a.amount_after,a.remarks,b.course_id,c.name
+      FROM enrichment_productbundle a join enrichment_productbundlecourse b
+      on a.id=b.producebundle_id
+      join enrichment_course c on c.id=b.course_id WHERE flag=0
+  </select>
+    <select id="getProductBundleById" resultMap="ProductBundleDto">
+      SELECT DISTINCT a.id,a.charging_item,a.item_code,a.amount_before,a.amount_after,a.remarks,b.course_id,c.name,b.level_id id1,d.name name1
+      FROM enrichment_productbundle a
+      join enrichment_productbundlecourse b on a.id=b.producebundle_id
+      join enrichment_course c on c.id=b.course_id
+      join enrichment_courselevel d on d.id=b.level_id
+      WHERE flag=0 and a.id=#{id}
+    </select>
+</mapper>

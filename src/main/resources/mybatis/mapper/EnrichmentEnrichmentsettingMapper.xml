@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.hq.dao.mapper.EnrichmentEnrichmentsettingMapper">
+  <resultMap id="BaseResultMap" type="com.taidii.staffdevelopment.hq.entity.EnrichmentEnrichmentsetting">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="center_id" jdbcType="INTEGER" property="centerId" />
+    <result column="monday_start_time" jdbcType="TIME" property="mondayStartTime" />
+    <result column="monday_end_time" jdbcType="TIME" property="mondayEndTime" />
+    <result column="monday_status" jdbcType="INTEGER" property="mondayStatus" />
+    <result column="tuesday_start_time" jdbcType="TIME" property="tuesdayStartTime" />
+    <result column="tuesday_end_time" jdbcType="TIME" property="tuesdayEndTime" />
+    <result column="tuesday_status" jdbcType="INTEGER" property="tuesdayStatus" />
+    <result column="wednesday_start_time" jdbcType="TIME" property="wednesdayStartTime" />
+    <result column="wednesday_end_time" jdbcType="TIME" property="wednesdayEndTime" />
+    <result column="wednesday_status" jdbcType="INTEGER" property="wednesdayStatus" />
+    <result column="thursday_start_time" jdbcType="TIME" property="thursdayStartTime" />
+    <result column="thursday_end_time" jdbcType="TIME" property="thursdayEndTime" />
+    <result column="thursday_status" jdbcType="INTEGER" property="thursdayStatus" />
+    <result column="friday_start_time" jdbcType="TIME" property="fridayStartTime" />
+    <result column="friday_end_time" jdbcType="TIME" property="fridayEndTime" />
+    <result column="friday_status" jdbcType="INTEGER" property="fridayStatus" />
+    <result column="saturday_start_time" jdbcType="TIME" property="saturdayStartTime" />
+    <result column="saturday_end_time" jdbcType="TIME" property="saturdayEndTime" />
+    <result column="saturday_status" jdbcType="INTEGER" property="saturdayStatus" />
+    <result column="sunday_start_time" jdbcType="TIME" property="sundayStartTime" />
+    <result column="sunday_end_time" jdbcType="TIME" property="sundayEndTime" />
+    <result column="sunday_status" jdbcType="INTEGER" property="sundayStatus" />
+    <result column="calendar_holiday_effect_lesson" jdbcType="BIT" property="calendarHolidayEffectLesson" />
+    <result column="auto_renew_classes" jdbcType="BIT" property="autoRenewClasses" />
+    <result column="lessons_of_one_term" jdbcType="INTEGER" property="lessonsOfOneTerm" />
+    <result column="mandatory_parent_email" jdbcType="BIT" property="mandatoryParentEmail" />
+    <result column="start_date_can_set_past_date" jdbcType="BIT" property="startDateCanSetPastDate" />
+    <result column="reschedule_within_days" jdbcType="INTEGER" property="rescheduleWithinDays" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, center_id, monday_start_time, monday_end_time, monday_status, tuesday_start_time, 
+    tuesday_end_time, tuesday_status, wednesday_start_time, wednesday_end_time, wednesday_status, 
+    thursday_start_time, thursday_end_time, thursday_status, friday_start_time, friday_end_time, 
+    friday_status, saturday_start_time, saturday_end_time, saturday_status, sunday_start_time, 
+    sunday_end_time, sunday_status, calendar_holiday_effect_lesson, auto_renew_classes, 
+    lessons_of_one_term, mandatory_parent_email, start_date_can_set_past_date, reschedule_within_days
+  </sql>
+  <select id="selectByExample" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentEnrichmentsettingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enrichment_enrichmentsetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enrichment_enrichmentsetting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enrichment_enrichmentsetting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentEnrichmentsettingExample">
+    delete from enrichment_enrichmentsetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentEnrichmentsetting">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enrichment_enrichmentsetting (center_id, monday_start_time, monday_end_time, 
+      monday_status, tuesday_start_time, tuesday_end_time, 
+      tuesday_status, wednesday_start_time, wednesday_end_time, 
+      wednesday_status, thursday_start_time, thursday_end_time, 
+      thursday_status, friday_start_time, friday_end_time, 
+      friday_status, saturday_start_time, saturday_end_time, 
+      saturday_status, sunday_start_time, sunday_end_time, 
+      sunday_status, calendar_holiday_effect_lesson, 
+      auto_renew_classes, lessons_of_one_term, mandatory_parent_email, 
+      start_date_can_set_past_date, reschedule_within_days
+      )
+    values (#{centerId,jdbcType=INTEGER}, #{mondayStartTime,jdbcType=TIME}, #{mondayEndTime,jdbcType=TIME}, 
+      #{mondayStatus,jdbcType=INTEGER}, #{tuesdayStartTime,jdbcType=TIME}, #{tuesdayEndTime,jdbcType=TIME}, 
+      #{tuesdayStatus,jdbcType=INTEGER}, #{wednesdayStartTime,jdbcType=TIME}, #{wednesdayEndTime,jdbcType=TIME}, 
+      #{wednesdayStatus,jdbcType=INTEGER}, #{thursdayStartTime,jdbcType=TIME}, #{thursdayEndTime,jdbcType=TIME}, 
+      #{thursdayStatus,jdbcType=INTEGER}, #{fridayStartTime,jdbcType=TIME}, #{fridayEndTime,jdbcType=TIME}, 
+      #{fridayStatus,jdbcType=INTEGER}, #{saturdayStartTime,jdbcType=TIME}, #{saturdayEndTime,jdbcType=TIME}, 
+      #{saturdayStatus,jdbcType=INTEGER}, #{sundayStartTime,jdbcType=TIME}, #{sundayEndTime,jdbcType=TIME}, 
+      #{sundayStatus,jdbcType=INTEGER}, #{calendarHolidayEffectLesson,jdbcType=BIT}, 
+      #{autoRenewClasses,jdbcType=BIT}, #{lessonsOfOneTerm,jdbcType=INTEGER}, #{mandatoryParentEmail,jdbcType=BIT}, 
+      #{startDateCanSetPastDate,jdbcType=BIT}, #{rescheduleWithinDays,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentEnrichmentsetting">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enrichment_enrichmentsetting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="centerId != null">
+        center_id,
+      </if>
+      <if test="mondayStartTime != null">
+        monday_start_time,
+      </if>
+      <if test="mondayEndTime != null">
+        monday_end_time,
+      </if>
+      <if test="mondayStatus != null">
+        monday_status,
+      </if>
+      <if test="tuesdayStartTime != null">
+        tuesday_start_time,
+      </if>
+      <if test="tuesdayEndTime != null">
+        tuesday_end_time,
+      </if>
+      <if test="tuesdayStatus != null">
+        tuesday_status,
+      </if>
+      <if test="wednesdayStartTime != null">
+        wednesday_start_time,
+      </if>
+      <if test="wednesdayEndTime != null">
+        wednesday_end_time,
+      </if>
+      <if test="wednesdayStatus != null">
+        wednesday_status,
+      </if>
+      <if test="thursdayStartTime != null">
+        thursday_start_time,
+      </if>
+      <if test="thursdayEndTime != null">
+        thursday_end_time,
+      </if>
+      <if test="thursdayStatus != null">
+        thursday_status,
+      </if>
+      <if test="fridayStartTime != null">
+        friday_start_time,
+      </if>
+      <if test="fridayEndTime != null">
+        friday_end_time,
+      </if>
+      <if test="fridayStatus != null">
+        friday_status,
+      </if>
+      <if test="saturdayStartTime != null">
+        saturday_start_time,
+      </if>
+      <if test="saturdayEndTime != null">
+        saturday_end_time,
+      </if>
+      <if test="saturdayStatus != null">
+        saturday_status,
+      </if>
+      <if test="sundayStartTime != null">
+        sunday_start_time,
+      </if>
+      <if test="sundayEndTime != null">
+        sunday_end_time,
+      </if>
+      <if test="sundayStatus != null">
+        sunday_status,
+      </if>
+      <if test="calendarHolidayEffectLesson != null">
+        calendar_holiday_effect_lesson,
+      </if>
+      <if test="autoRenewClasses != null">
+        auto_renew_classes,
+      </if>
+      <if test="lessonsOfOneTerm != null">
+        lessons_of_one_term,
+      </if>
+      <if test="mandatoryParentEmail != null">
+        mandatory_parent_email,
+      </if>
+      <if test="startDateCanSetPastDate != null">
+        start_date_can_set_past_date,
+      </if>
+      <if test="rescheduleWithinDays != null">
+        reschedule_within_days,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="centerId != null">
+        #{centerId,jdbcType=INTEGER},
+      </if>
+      <if test="mondayStartTime != null">
+        #{mondayStartTime,jdbcType=TIME},
+      </if>
+      <if test="mondayEndTime != null">
+        #{mondayEndTime,jdbcType=TIME},
+      </if>
+      <if test="mondayStatus != null">
+        #{mondayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="tuesdayStartTime != null">
+        #{tuesdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="tuesdayEndTime != null">
+        #{tuesdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="tuesdayStatus != null">
+        #{tuesdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="wednesdayStartTime != null">
+        #{wednesdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="wednesdayEndTime != null">
+        #{wednesdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="wednesdayStatus != null">
+        #{wednesdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="thursdayStartTime != null">
+        #{thursdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="thursdayEndTime != null">
+        #{thursdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="thursdayStatus != null">
+        #{thursdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="fridayStartTime != null">
+        #{fridayStartTime,jdbcType=TIME},
+      </if>
+      <if test="fridayEndTime != null">
+        #{fridayEndTime,jdbcType=TIME},
+      </if>
+      <if test="fridayStatus != null">
+        #{fridayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="saturdayStartTime != null">
+        #{saturdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="saturdayEndTime != null">
+        #{saturdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="saturdayStatus != null">
+        #{saturdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sundayStartTime != null">
+        #{sundayStartTime,jdbcType=TIME},
+      </if>
+      <if test="sundayEndTime != null">
+        #{sundayEndTime,jdbcType=TIME},
+      </if>
+      <if test="sundayStatus != null">
+        #{sundayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="calendarHolidayEffectLesson != null">
+        #{calendarHolidayEffectLesson,jdbcType=BIT},
+      </if>
+      <if test="autoRenewClasses != null">
+        #{autoRenewClasses,jdbcType=BIT},
+      </if>
+      <if test="lessonsOfOneTerm != null">
+        #{lessonsOfOneTerm,jdbcType=INTEGER},
+      </if>
+      <if test="mandatoryParentEmail != null">
+        #{mandatoryParentEmail,jdbcType=BIT},
+      </if>
+      <if test="startDateCanSetPastDate != null">
+        #{startDateCanSetPastDate,jdbcType=BIT},
+      </if>
+      <if test="rescheduleWithinDays != null">
+        #{rescheduleWithinDays,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentEnrichmentsettingExample" resultType="java.lang.Long">
+    select count(*) from enrichment_enrichmentsetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enrichment_enrichmentsetting
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.centerId != null">
+        center_id = #{record.centerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mondayStartTime != null">
+        monday_start_time = #{record.mondayStartTime,jdbcType=TIME},
+      </if>
+      <if test="record.mondayEndTime != null">
+        monday_end_time = #{record.mondayEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.mondayStatus != null">
+        monday_status = #{record.mondayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.tuesdayStartTime != null">
+        tuesday_start_time = #{record.tuesdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="record.tuesdayEndTime != null">
+        tuesday_end_time = #{record.tuesdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.tuesdayStatus != null">
+        tuesday_status = #{record.tuesdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.wednesdayStartTime != null">
+        wednesday_start_time = #{record.wednesdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="record.wednesdayEndTime != null">
+        wednesday_end_time = #{record.wednesdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.wednesdayStatus != null">
+        wednesday_status = #{record.wednesdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.thursdayStartTime != null">
+        thursday_start_time = #{record.thursdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="record.thursdayEndTime != null">
+        thursday_end_time = #{record.thursdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.thursdayStatus != null">
+        thursday_status = #{record.thursdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.fridayStartTime != null">
+        friday_start_time = #{record.fridayStartTime,jdbcType=TIME},
+      </if>
+      <if test="record.fridayEndTime != null">
+        friday_end_time = #{record.fridayEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.fridayStatus != null">
+        friday_status = #{record.fridayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.saturdayStartTime != null">
+        saturday_start_time = #{record.saturdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="record.saturdayEndTime != null">
+        saturday_end_time = #{record.saturdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.saturdayStatus != null">
+        saturday_status = #{record.saturdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.sundayStartTime != null">
+        sunday_start_time = #{record.sundayStartTime,jdbcType=TIME},
+      </if>
+      <if test="record.sundayEndTime != null">
+        sunday_end_time = #{record.sundayEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.sundayStatus != null">
+        sunday_status = #{record.sundayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.calendarHolidayEffectLesson != null">
+        calendar_holiday_effect_lesson = #{record.calendarHolidayEffectLesson,jdbcType=BIT},
+      </if>
+      <if test="record.autoRenewClasses != null">
+        auto_renew_classes = #{record.autoRenewClasses,jdbcType=BIT},
+      </if>
+      <if test="record.lessonsOfOneTerm != null">
+        lessons_of_one_term = #{record.lessonsOfOneTerm,jdbcType=INTEGER},
+      </if>
+      <if test="record.mandatoryParentEmail != null">
+        mandatory_parent_email = #{record.mandatoryParentEmail,jdbcType=BIT},
+      </if>
+      <if test="record.startDateCanSetPastDate != null">
+        start_date_can_set_past_date = #{record.startDateCanSetPastDate,jdbcType=BIT},
+      </if>
+      <if test="record.rescheduleWithinDays != null">
+        reschedule_within_days = #{record.rescheduleWithinDays,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enrichment_enrichmentsetting
+    set id = #{record.id,jdbcType=INTEGER},
+      center_id = #{record.centerId,jdbcType=INTEGER},
+      monday_start_time = #{record.mondayStartTime,jdbcType=TIME},
+      monday_end_time = #{record.mondayEndTime,jdbcType=TIME},
+      monday_status = #{record.mondayStatus,jdbcType=INTEGER},
+      tuesday_start_time = #{record.tuesdayStartTime,jdbcType=TIME},
+      tuesday_end_time = #{record.tuesdayEndTime,jdbcType=TIME},
+      tuesday_status = #{record.tuesdayStatus,jdbcType=INTEGER},
+      wednesday_start_time = #{record.wednesdayStartTime,jdbcType=TIME},
+      wednesday_end_time = #{record.wednesdayEndTime,jdbcType=TIME},
+      wednesday_status = #{record.wednesdayStatus,jdbcType=INTEGER},
+      thursday_start_time = #{record.thursdayStartTime,jdbcType=TIME},
+      thursday_end_time = #{record.thursdayEndTime,jdbcType=TIME},
+      thursday_status = #{record.thursdayStatus,jdbcType=INTEGER},
+      friday_start_time = #{record.fridayStartTime,jdbcType=TIME},
+      friday_end_time = #{record.fridayEndTime,jdbcType=TIME},
+      friday_status = #{record.fridayStatus,jdbcType=INTEGER},
+      saturday_start_time = #{record.saturdayStartTime,jdbcType=TIME},
+      saturday_end_time = #{record.saturdayEndTime,jdbcType=TIME},
+      saturday_status = #{record.saturdayStatus,jdbcType=INTEGER},
+      sunday_start_time = #{record.sundayStartTime,jdbcType=TIME},
+      sunday_end_time = #{record.sundayEndTime,jdbcType=TIME},
+      sunday_status = #{record.sundayStatus,jdbcType=INTEGER},
+      calendar_holiday_effect_lesson = #{record.calendarHolidayEffectLesson,jdbcType=BIT},
+      auto_renew_classes = #{record.autoRenewClasses,jdbcType=BIT},
+      lessons_of_one_term = #{record.lessonsOfOneTerm,jdbcType=INTEGER},
+      mandatory_parent_email = #{record.mandatoryParentEmail,jdbcType=BIT},
+      start_date_can_set_past_date = #{record.startDateCanSetPastDate,jdbcType=BIT},
+      reschedule_within_days = #{record.rescheduleWithinDays,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentEnrichmentsetting">
+    update enrichment_enrichmentsetting
+    <set>
+      <if test="centerId != null">
+        center_id = #{centerId,jdbcType=INTEGER},
+      </if>
+      <if test="mondayStartTime != null">
+        monday_start_time = #{mondayStartTime,jdbcType=TIME},
+      </if>
+      <if test="mondayEndTime != null">
+        monday_end_time = #{mondayEndTime,jdbcType=TIME},
+      </if>
+      <if test="mondayStatus != null">
+        monday_status = #{mondayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="tuesdayStartTime != null">
+        tuesday_start_time = #{tuesdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="tuesdayEndTime != null">
+        tuesday_end_time = #{tuesdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="tuesdayStatus != null">
+        tuesday_status = #{tuesdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="wednesdayStartTime != null">
+        wednesday_start_time = #{wednesdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="wednesdayEndTime != null">
+        wednesday_end_time = #{wednesdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="wednesdayStatus != null">
+        wednesday_status = #{wednesdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="thursdayStartTime != null">
+        thursday_start_time = #{thursdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="thursdayEndTime != null">
+        thursday_end_time = #{thursdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="thursdayStatus != null">
+        thursday_status = #{thursdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="fridayStartTime != null">
+        friday_start_time = #{fridayStartTime,jdbcType=TIME},
+      </if>
+      <if test="fridayEndTime != null">
+        friday_end_time = #{fridayEndTime,jdbcType=TIME},
+      </if>
+      <if test="fridayStatus != null">
+        friday_status = #{fridayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="saturdayStartTime != null">
+        saturday_start_time = #{saturdayStartTime,jdbcType=TIME},
+      </if>
+      <if test="saturdayEndTime != null">
+        saturday_end_time = #{saturdayEndTime,jdbcType=TIME},
+      </if>
+      <if test="saturdayStatus != null">
+        saturday_status = #{saturdayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sundayStartTime != null">
+        sunday_start_time = #{sundayStartTime,jdbcType=TIME},
+      </if>
+      <if test="sundayEndTime != null">
+        sunday_end_time = #{sundayEndTime,jdbcType=TIME},
+      </if>
+      <if test="sundayStatus != null">
+        sunday_status = #{sundayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="calendarHolidayEffectLesson != null">
+        calendar_holiday_effect_lesson = #{calendarHolidayEffectLesson,jdbcType=BIT},
+      </if>
+      <if test="autoRenewClasses != null">
+        auto_renew_classes = #{autoRenewClasses,jdbcType=BIT},
+      </if>
+      <if test="lessonsOfOneTerm != null">
+        lessons_of_one_term = #{lessonsOfOneTerm,jdbcType=INTEGER},
+      </if>
+      <if test="mandatoryParentEmail != null">
+        mandatory_parent_email = #{mandatoryParentEmail,jdbcType=BIT},
+      </if>
+      <if test="startDateCanSetPastDate != null">
+        start_date_can_set_past_date = #{startDateCanSetPastDate,jdbcType=BIT},
+      </if>
+      <if test="rescheduleWithinDays != null">
+        reschedule_within_days = #{rescheduleWithinDays,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taidii.staffdevelopment.hq.entity.EnrichmentEnrichmentsetting">
+    update enrichment_enrichmentsetting
+    set center_id = #{centerId,jdbcType=INTEGER},
+      monday_start_time = #{mondayStartTime,jdbcType=TIME},
+      monday_end_time = #{mondayEndTime,jdbcType=TIME},
+      monday_status = #{mondayStatus,jdbcType=INTEGER},
+      tuesday_start_time = #{tuesdayStartTime,jdbcType=TIME},
+      tuesday_end_time = #{tuesdayEndTime,jdbcType=TIME},
+      tuesday_status = #{tuesdayStatus,jdbcType=INTEGER},
+      wednesday_start_time = #{wednesdayStartTime,jdbcType=TIME},
+      wednesday_end_time = #{wednesdayEndTime,jdbcType=TIME},
+      wednesday_status = #{wednesdayStatus,jdbcType=INTEGER},
+      thursday_start_time = #{thursdayStartTime,jdbcType=TIME},
+      thursday_end_time = #{thursdayEndTime,jdbcType=TIME},
+      thursday_status = #{thursdayStatus,jdbcType=INTEGER},
+      friday_start_time = #{fridayStartTime,jdbcType=TIME},
+      friday_end_time = #{fridayEndTime,jdbcType=TIME},
+      friday_status = #{fridayStatus,jdbcType=INTEGER},
+      saturday_start_time = #{saturdayStartTime,jdbcType=TIME},
+      saturday_end_time = #{saturdayEndTime,jdbcType=TIME},
+      saturday_status = #{saturdayStatus,jdbcType=INTEGER},
+      sunday_start_time = #{sundayStartTime,jdbcType=TIME},
+      sunday_end_time = #{sundayEndTime,jdbcType=TIME},
+      sunday_status = #{sundayStatus,jdbcType=INTEGER},
+      calendar_holiday_effect_lesson = #{calendarHolidayEffectLesson,jdbcType=BIT},
+      auto_renew_classes = #{autoRenewClasses,jdbcType=BIT},
+      lessons_of_one_term = #{lessonsOfOneTerm,jdbcType=INTEGER},
+      mandatory_parent_email = #{mandatoryParentEmail,jdbcType=BIT},
+      start_date_can_set_past_date = #{startDateCanSetPastDate,jdbcType=BIT},
+      reschedule_within_days = #{rescheduleWithinDays,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

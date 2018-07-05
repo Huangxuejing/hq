@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.dao.mapper.custom.DevelopTimeSettingMapper2">
+  	<resultMap id="BaseResultMap" type="com.taidii.staffdevelopment.entity.DevelopTimeSetting">
+	    <id column="id" jdbcType="INTEGER" property="id" />
+	    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+	    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+	    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+	    <result column="year" jdbcType="INTEGER" property="year" />
+	    <result column="period" jdbcType="TINYINT" property="period" />
+	    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+	    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+	    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+	    <result column="teacher_end_time" jdbcType="TIMESTAMP" property="teacherEndTime" />
+	    <result column="execution_time" jdbcType="TIMESTAMP" property="executionTime" />
+	    <result column="execution_num" jdbcType="TINYINT" property="executionNum" />
+	</resultMap>
+	  
+  <sql id="constant_sql">
+  	<if test="startTime != null">
+  		AND DATE(start_time) = #{startTime}
+  	</if>
+  	<if test="endTime != null">
+  		AND DATE(end_time) = #{endTime}
+  	</if>
+  	<if test="teacherEndTime != null">
+  		AND DATE(teacher_end_time) = #{teacherEndTime}
+  	</if>
+  	<if test="isDelete != null">
+  		AND is_delete = #{isDelete}
+  	</if>
+  </sql>
+  
+  <!-- 根据条件获取时间设置 -->
+  <select id="queryBy" resultMap="BaseResultMap">
+  	SELECT
+		*
+	FROM
+		develop_time_setting
+	<where>
+		<include refid="constant_sql"></include>
+	</where>
+	ORDER BY school_id,period
+  </select>
+
+  <select id="fetchCurrent" resultMap="BaseResultMap">
+    select
+    	ts.*
+    from develop_time_setting ts
+    where
+    EXISTS (
+        select 1 from  accounts_principal ap
+        where ap.user_Id =#{userId}
+        and ap.center_id = ts.school_id
+        union all
+        select 1 from   accounts_teacher at
+        where at.user_Id =#{userId}
+        and at.center_id = ts.school_id
+    )
+    and ts.is_delete =#{isDelete}
+    and ts.start_time <![CDATA[<=]]>#{date}
+    and  ts.end_time <![CDATA[>=]]>#{date}
+    limit 1
+  </select>
+
+</mapper>

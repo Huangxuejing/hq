@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taidii.staffdevelopment.dao.mapper.custom.DevelopCourseMapper2">
+    <!-- 获取 Training List 数据 -->
+    <resultMap id="course" type="com.taidii.staffdevelopment.dto.training.CourseDTO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="awarding_organization" property="awardingOrganization"/>
+        <result column="start_time" property="startTime"/>
+        <result column="training_hours" property="trainingHours"/>
+        <result column="course_fee" property="courseFee"/>
+        <result column="course_grant" property="grant"/>
+        <result column="absentee_payroll" property="absenteePayroll"/>
+        <result column="duty_level_skill_id" property="dutyLevelSkillId"/>
+        <result column="code" property="dutyLevelSkillCode"/>
+        <result column="status" property="status"/>
+        <result column="attachment" property="attachment"/>
+        <collection property="members"  ofType="com.taidii.staffdevelopment.dto.OptionDTO">
+            <id column="user_id" property="id"/>
+        </collection>
+    </resultMap>
+    <resultMap id="skillTree" type="com.taidii.staffdevelopment.dto.training.CategoryDTO">
+        <id column="id" property="id"/>
+        <result column="category" property="name"/>
+        <result column="code" property="code"/>
+        <collection property="subCategorys" ofType="com.taidii.staffdevelopment.dto.training.SubCategoryDTO">
+            <id column="sub_id" property="id"/>
+            <result column="sub_category" property="name"/>
+            <result column="sub_code" property="code"/>
+        </collection>
+    </resultMap>
+    <select id="getCourseList" resultMap="course">
+        SELECT
+            c.id,
+            c.name,
+            c.awarding_organization,
+            c.start_time,
+            c.training_hours,
+            c.course_fee,
+            c.course_grant,
+            c.absentee_payroll,
+            c.duty_level_skill_id,
+            skill.code,
+            uc.user_id
+        FROM
+            ( SELECT * FROM develop_course WHERE school_id = #{schoolId}
+            <if test="status == 1">
+                and status=#{status}
+            </if>
+            <if test="status == 2">
+                and status &gt; 1
+            </if>
+            and year=#{year} and is_delete=0 ) c
+            LEFT JOIN develop_user_course uc ON c.id = uc.course_id and uc.is_delete=0
+            LEFT JOIN develop_duty_level_skill skill ON c.duty_level_skill_id = skill.id
+    </select>
+
+    <select id="getSkillTree" resultMap="skillTree">
+        SELECT
+            s1.id id,
+            s1.name category,
+            s1.code code,
+            s2.id sub_id,
+            s2.name sub_category,
+            s2.code sub_code
+        FROM
+            ( SELECT * FROM develop_duty_level_skill WHERE school_id IN (#{schoolId},0) AND is_delete = 0 AND depth = 1
+              AND year IN (0,(select max(year) from develop_duty_level_skill where school_id = #{schoolId} AND is_delete=0 group by school_id)) ) s1
+            LEFT JOIN
+            ( SELECT * FROM develop_duty_level_skill WHERE is_delete = 0 AND depth = 2 ) s2 ON s1.id = s2.parent_id
+    </select>
+
+    <resultMap id="userSummary" type="com.taidii.staffdevelopment.dto.training.UserSummaryDTO">
+        <id column="id" property="id"/>
+        <result column="plan_hour" property="planHour"/>
+        <result column="complete_hour" property="completeHour"/>
+        <result column="course_grant" property="grant"/>
+        <result column="payroll" property="payroll"/>
+        <result column="fee" property="fee"/>
+    </resultMap>
+    <select id="getUserSummary" resultMap="userSummary">
+        SELECT
+            uc.user_id id,
+            sum( uc.plan_total_training_hour) plan_hour,
+            sum( uc.completed_training_hour ) complete_hour,
+            sum( uc.course_grant ) course_grant,
+            sum( uc.absentee_payroll ) payroll,
+            sum( uc.course_fee ) fee
+        FROM
+            develop_course c
+            LEFT JOIN develop_user_course uc on c.id = uc.course_id
+        WHERE
+            c.school_id = #{schoolId} AND c.year = #{year} AND c.status &gt; 2
+        GROUP BY
+            user_id
+    </select>
+    
+    <!-- 找到最新的review 状态的自评 -->
+    <select id="getLastestReview" resultType="java.util.Map">
+        SELECT
+            user_id, max(id) id
+        FROM
+            develop_self_evaluation
+        WHERE
+            is_delete = 0
+            AND status = 4
+            AND user_id IN
+            <foreach collection="userIds" close=")" separator="," open="(" item="userId">
+                #{userId}
+            </foreach>
+        GROUP BY
+            user_id
+    </select>
+    <select id="getLastestReviewEvaluationId" resultType="java.lang.Integer">
+        SELECT
+            max( se.id )
+        FROM
+            develop_self_evaluation se
+            <if test="dutyId != null">
+                left join develop_duty_level dl on dl.id = se.duty_level_id
+                left join develop_duty d on dl.duty_id = d.id
+            </if>
+        WHERE
+            se.STATUS = 4
+            AND se.is_delete = 0
+            <if test="dutyId != null">
+                AND d.id = #{dutyId}
+            </if>
+        GROUP BY
+            se.user_id
+    </select>
+    <!-- 找到用户plan中没有完全完成目标的二级技能 -->
+    <resultMap id="userUnFinishedSkill" type="com.taidii.staffdevelopment.dto.training.SubCategoryDTO">
+        <id column="skill_id" property="id"/>
+        <result column="code" property="code"/>
+        <collection property="teachers" ofType="com.taidii.staffdevelopment.dto.training.TrainingNeedUserDTO">
+            <id column="user_id" property="id"/>
+            <result column="status" property="status"/>
+            <result column="evaluation_id" property="evaluationId"/>
+        </collection>
+    </resultMap>
+    <!-- 先获取plan中target 的父级技能，再获取用户课程的关联技能 -->
+    <select id="getUnFinishedSkill" resultMap="userUnFinishedSkill">
+        SELECT DISTINCT
+        sk2.id skill_id,sk2.code,se.user_id,uc.status,se.id evaluation_id
+        FROM
+        develop_self_evaluation_plan sep
+        LEFT JOIN develop_self_evaluation se ON se.id = sep.self_evaluation_id
+        LEFT JOIN develop_duty_level_skill sk3 ON sk3.id = sep.duty_level_skill_id
+        LEFT JOIN develop_duty_level_skill sk2 ON sk3.parent_id = sk2.id
+        LEFT JOIN (
+          SELECT DISTINCT
+            uc.user_id,
+            c.duty_level_skill_id skill_id,
+            min(uc.status + c.status*3) status
+          FROM
+            develop_user_course uc
+            LEFT JOIN develop_course c ON c.id = uc.course_id
+          WHERE uc.self_evaluation_id in
+              <foreach collection="evaluationIds" item="evaluationId" open="(" separator="," close=")">
+                #{evaluationId}
+              </foreach>
+              AND c.is_delete=0
+        GROUP BY
+        uc.user_id,c.duty_level_skill_id) uc ON sk2.id = uc.skill_id AND se.user_id = uc.user_id
+        WHERE
+        se.id IN
+        <foreach collection="evaluationIds" item="evaluationId" open="(" separator="," close=")">
+                #{evaluationId}
+        </foreach>
+    </select>
+
+    <!-- 得到所有年 -->
+    <select id="getCourseYear" resultType="java.lang.Integer">
+        select distinct year from develop_course where school_id = #{schoolId} and is_delete = 0 order by year desc;
+    </select>
+
+    <!--得到所有老师 -->
+    <select id="getAllTeacherOfSchool" resultType="com.taidii.staffdevelopment.dto.OptionDTO">
+        SELECT
+            au.id id,
+            concat(au.first_name,'&amp;',au.last_name) name
+        FROM
+            ( SELECT * FROM accounts_teacher WHERE center_id = #{schoolId} ) t
+            LEFT JOIN auth_user au ON au.id = t.user_id
+    </select>
+    <select id="getUserPic" resultType="com.taidii.staffdevelopment.dto.OptionDTO">
+        SELECT
+            u.id id,
+            t.avatar name
+        FROM
+            accounts_teacher t
+            LEFT JOIN auth_user u ON t.user_id = u.id
+        WHERE
+            t.center_id = #{schoolId} AND u.is_active = 1;
+    </select>
+    <select id="getUserInfo" resultType="com.taidii.staffdevelopment.dto.training.UserCourseHistoryDTO">
+        SELECT
+            u.id id,
+            concat( u.first_name, ' ', u.last_name ) name,
+            t.avatar pic,
+            t.date_of_birth birth,
+            dl.`name` designation,
+            d.`name` classes
+        FROM
+            ( SELECT * FROM `auth_user` WHERE id = #{userId} ) u
+            LEFT JOIN accounts_teacher t ON u.id = t.user_id
+            LEFT JOIN develop_user_duty_level ud ON ud.user_id = u.id
+            LEFT JOIN develop_duty_level dl ON ud.duty_level_id = dl.id
+            LEFT JOIN develop_duty d ON d.id = dl.duty_id
+        WHERE u.is_active = 1
+    </select>
+    <select id="getUserCourseHistory" resultMap="course">
+        SELECT
+            uc.id id,
+            c.name,
+            c.awarding_organization,
+            c.start_time,
+            c.training_hours,
+            c.course_fee,
+            uc.course_grant,
+            uc.absentee_payroll,
+            c.status,
+            uc.attachment
+        FROM
+            develop_user_course uc
+            LEFT JOIN develop_course c ON uc.course_id = c.id
+        WHERE
+            c.STATUS > 1
+            AND uc.user_id = #{userId}
+            AND c.`year`=#{year}
+    </select>
+
+    <select id="getLastYear" resultType="java.lang.Integer">
+        SELECT max(year) FROM `develop_time_setting` where school_id = #{schoolId} and is_delete=0
+    </select>
+</mapper>
